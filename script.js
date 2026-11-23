@@ -81,8 +81,190 @@ setInterval(tick, 1000);
 
   const hero = document.getElementById("lanterns");
   const baraat = document.getElementById("lanterns2");
-  if (hero) fill(hero, 14);
+  if (hero) fill(hero, 10);
   if (baraat) fill(baraat, 7);
+})();
+
+// Band ornaments. Each band gets at most one, and some get none on purpose —
+// a page that moves everywhere reads as busy rather than alive.
+(() => {
+  const svgNS = "http://www.w3.org/2000/svg";
+  const el = (name, attrs) => {
+    const node = document.createElementNS(svgNS, name);
+    Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
+    return node;
+  };
+  // pathLength normalises every shape to 1 unit, so one dash rule draws them all
+  const stroke = (node) => {
+    node.setAttribute("pathLength", "1");
+    node.setAttribute("class", "draw");
+    return node;
+  };
+
+  // Rangoli that draws itself once the band arrives
+  const rangoli = document.getElementById("rangoli");
+  if (rangoli) {
+    // Concentric rings of detached petals. Nothing runs to the centre, so it
+    // reads as a rangoli rather than a web of spokes.
+    const svg = el("svg", { viewBox: "0 0 400 400" });
+    svg.append(stroke(el("circle", { cx: 200, cy: 200, r: 192 })));
+    svg.append(stroke(el("circle", { cx: 200, cy: 200, r: 183 })));
+    for (let i = 0; i < 16; i += 1) {
+      svg.append(stroke(el("path", {
+        d: "M200 12 C211 32 211 46 200 58 C189 46 189 32 200 12 Z",
+        transform: `rotate(${i * 22.5} 200 200)`,
+      })));
+    }
+    svg.append(stroke(el("circle", { cx: 200, cy: 200, r: 134 })));
+    for (let i = 0; i < 8; i += 1) {
+      svg.append(stroke(el("path", {
+        d: "M200 74 C224 106 224 132 200 156 C176 132 176 106 200 74 Z",
+        transform: `rotate(${i * 45} 200 200)`,
+      })));
+    }
+    svg.append(stroke(el("circle", { cx: 200, cy: 200, r: 30 })));
+    svg.append(stroke(el("circle", { cx: 200, cy: 200, r: 19 })));
+    rangoli.append(svg);
+  }
+
+  if (reducedMotion) return;
+
+  const fill = (layer, count) => {
+    for (let i = 0; i < count; i += 1) {
+      const lantern = document.createElement("img");
+      lantern.className = "lantern";
+      lantern.src = "lantern.png";
+      lantern.alt = "";
+      const scale = 0.55 + Math.random() * 0.85;
+      lantern.style.left = (Math.random() * 96).toFixed(2) + "%";
+      lantern.style.width = (46 * scale).toFixed(1) + "px";
+      lantern.style.animationDuration = (16 + Math.random() * 16).toFixed(1) + "s, " +
+        (4 + Math.random() * 4).toFixed(1) + "s";
+      lantern.style.animationDelay = (-Math.random() * 30).toFixed(1) + "s, " +
+        (-Math.random() * 5).toFixed(1) + "s";
+      layer.append(lantern);
+    }
+  };
+
+  const hero = document.getElementById("lanterns");
+  const baraat = document.getElementById("lanterns2");
+  if (hero) fill(hero, 10);
+  if (baraat) fill(baraat, 7);
+})();
+
+// Band ornaments. Each band gets at most one, and some get none on purpose —
+// a page that moves everywhere reads as busy rather than alive.
+(() => {
+  const svgNS = "http://www.w3.org/2000/svg";
+  const el = (name, attrs) => {
+    const node = document.createElementNS(svgNS, name);
+    Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
+    return node;
+  };
+  // pathLength normalises every shape to 1 unit, so one dash rule draws them all
+  const stroke = (node) => {
+    node.setAttribute("pathLength", "1");
+    node.setAttribute("class", "draw");
+    return node;
+  };
+
+  // Rangoli that draws itself once the band arrives
+  const rangoli = document.getElementById("rangoli");
+  if (rangoli) {
+    // Concentric rings of detached petals. Nothing runs to the centre, so it
+    // reads as a rangoli rather than a web of spokes.
+    const svg = el("svg", { viewBox: "0 0 400 400" });
+    svg.append(stroke(el("circle", { cx: 200, cy: 200, r: 192 })));
+    svg.append(stroke(el("circle", { cx: 200, cy: 200, r: 183 })));
+    for (let i = 0; i < 16; i += 1) {
+      svg.append(stroke(el("path", {
+        d: "M200 12 C211 32 211 46 200 58 C189 46 189 32 200 12 Z",
+        transform: `rotate(${i * 22.5} 200 200)`,
+      })));
+    }
+    svg.append(stroke(el("circle", { cx: 200, cy: 200, r: 134 })));
+    for (let i = 0; i < 8; i += 1) {
+      svg.append(stroke(el("path", {
+        d: "M200 74 C224 106 224 132 200 156 C176 132 176 106 200 74 Z",
+        transform: `rotate(${i * 45} 200 200)`,
+      })));
+    }
+    svg.append(stroke(el("circle", { cx: 200, cy: 200, r: 30 })));
+    svg.append(stroke(el("circle", { cx: 200, cy: 200, r: 19 })));
+    rangoli.append(svg);
+  }
+
+  // Paisley vines growing in from both margins
+  const vines = document.getElementById("vines");
+  if (vines) {
+    const vine = "M60 0 C14 70 96 120 42 192 C8 236 72 268 40 330" +
+      " M42 46 C70 54 78 76 58 92 M50 150 C22 160 18 186 44 196" +
+      " M46 250 C76 258 82 280 60 296";
+    ["vine--l", "vine--r"].forEach((side) => {
+      const svg = el("svg", { viewBox: "0 0 110 340", class: "vine " + side });
+      svg.append(stroke(el("path", { d: vine })));
+      vines.append(svg);
+    });
+  }
+
+  if (reducedMotion) return;
+
+  // Marigold petals drifting down over the lunch band
+  const petals = document.getElementById("petals");
+  if (petals) {
+    for (let i = 0; i < 14; i += 1) {
+      const petal = document.createElement("i");
+      const size = 7 + Math.random() * 7;
+      petal.style.left = (Math.random() * 98).toFixed(2) + "%";
+      petal.style.width = size.toFixed(1) + "px";
+      petal.style.height = (size * 0.66).toFixed(1) + "px";
+      petal.style.animationDuration = (9 + Math.random() * 8).toFixed(1) + "s, " +
+        (2.5 + Math.random() * 2.5).toFixed(1) + "s";
+      petal.style.animationDelay = (-Math.random() * 16).toFixed(1) + "s, " +
+        (-Math.random() * 4).toFixed(1) + "s";
+      petals.append(petal);
+    }
+  }
+
+  // Fireworks over the baraat. Each burst is one element whose box-shadow
+  // carries every spark, so a burst costs a single composited layer.
+  const fireworks = document.getElementById("fireworks");
+  if (fireworks) {
+    const colours = ["#ffd98a", "#ffb3c6", "#fff1cd", "#ffc46b"];
+    for (let i = 0; i < 9; i += 1) {
+      const burst = document.createElement("i");
+      const colour = colours[i % colours.length];
+      const sparks = [];
+      for (let k = 0; k < 28; k += 1) {
+        const angle = (k / 28) * Math.PI * 2 + Math.random() * 0.2;
+        const reach = 34 + Math.random() * 46;
+        sparks.push(
+          `${(Math.cos(angle) * reach).toFixed(1)}px ${(Math.sin(angle) * reach).toFixed(1)}px 0 ${colour}`
+        );
+      }
+      burst.style.boxShadow = sparks.join(",");
+      // Kept to the sky on either side of the painting rather than over it
+      const side = i % 2 === 0 ? 4 + Math.random() * 16 : 80 + Math.random() * 16;
+      burst.style.left = side.toFixed(1) + "%";
+      burst.style.top = (10 + Math.random() * 44).toFixed(1) + "%";
+      burst.style.animationDelay = (i * 0.52 + Math.random() * 0.4).toFixed(2) + "s";
+      fireworks.append(burst);
+    }
+  }
+
+  // Embers lifting off the footer diya
+  const embers = document.getElementById("embers");
+  if (embers) {
+    for (let i = 0; i < 16; i += 1) {
+      const ember = document.createElement("i");
+      ember.style.left = (42 + Math.random() * 16).toFixed(2) + "%";
+      ember.style.animationDuration = (4.5 + Math.random() * 4).toFixed(1) + "s, " +
+        (1.6 + Math.random() * 1.6).toFixed(1) + "s";
+      ember.style.animationDelay = (-Math.random() * 8).toFixed(1) + "s, " +
+        (-Math.random() * 3).toFixed(1) + "s";
+      embers.append(ember);
+    }
+  }
 })();
 
 // Envelope intro. Skipped with ?intro=0, otherwise shown once per session.
@@ -146,40 +328,45 @@ setInterval(tick, 1000);
       '</g>' +
     '</svg>';
 
+  // The flap is a real two-sided sheet: cream outside, lining paper inside.
+  // Giving it a back face means the fold never has to repaint a fill
+  // part-way through the rotation, which is what made it stutter.
+  const flapShape = "M0 0 H300 C282 46 224 84 150 118 C76 84 18 46 0 0 Z";
   const flap = document.createElement("div");
   flap.className = "front flap";
   flap.innerHTML =
-    '<svg viewBox="0 0 300 118" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
-      '<defs>' +
-        '<linearGradient id="flapPaper" x1="0" y1="0" x2="0" y2="1">' +
-          '<stop offset="0" stop-color="#f9eed8"/>' +
-          '<stop offset=".55" stop-color="#f2e3c3"/>' +
-          '<stop offset="1" stop-color="#e8d5ac"/>' +
-        '</linearGradient>' +
-      '</defs>' +
-      '<path class="paper" d="M0 0 H300 C282 46 224 84 150 118 C76 84 18 46 0 0 Z" fill="url(#flapPaper)"/>' +
-      '<path class="foil" d="M0 0 C18 46 76 84 150 118 C224 84 282 46 300 0"/>' +
-      '<path class="foil foil--thin" d="M12 2 C29 43 83 78 150 106 C217 78 271 43 288 2"/>' +
-      '<g class="foil" transform="translate(150 78)">' +
-        '<path d="M0 -12 C8 -6 10 1 0 11 C-10 1 -8 -6 0 -12 Z"/>' +
-        '<path class="foil--thin" d="M-18 -2 C-11 -7 -5 -5 0 0"/>' +
-        '<path class="foil--thin" d="M18 -2 C11 -7 5 -5 0 0"/>' +
-      '</g>' +
-    '</svg>';
+    '<div class="flap-face">' +
+      '<svg viewBox="0 0 300 118" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
+        '<defs>' +
+          '<linearGradient id="flapPaper" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="#f9eed8"/>' +
+            '<stop offset=".55" stop-color="#f2e3c3"/>' +
+            '<stop offset="1" stop-color="#e8d5ac"/>' +
+          '</linearGradient>' +
+        '</defs>' +
+        '<path d="' + flapShape + '" fill="url(#flapPaper)"/>' +
+        '<path class="foil" d="M0 0 C18 46 76 84 150 118 C224 84 282 46 300 0"/>' +
+        '<path class="foil foil--thin" d="M12 2 C29 43 83 78 150 106 C217 78 271 43 288 2"/>' +
+        '<g class="foil" transform="translate(150 78)">' +
+          '<path d="M0 -12 C8 -6 10 1 0 11 C-10 1 -8 -6 0 -12 Z"/>' +
+          '<path class="foil--thin" d="M-18 -2 C-11 -7 -5 -5 0 0"/>' +
+          '<path class="foil--thin" d="M18 -2 C11 -7 5 -5 0 0"/>' +
+        '</g>' +
+      '</svg>' +
+    '</div>' +
+    '<div class="flap-face flap-face--back">' +
+      '<svg viewBox="0 0 300 118" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
+        '<path d="' + flapShape + '" fill="#8d2340"/>' +
+        '<path d="' + flapShape + '" fill="url(#pocketSheen)" opacity=".5"/>' +
+      '</svg>' +
+    '</div>';
 
   const wax = document.createElement("div");
   wax.className = "wax";
   wax.setAttribute("aria-hidden", "true");
   wax.textContent = "S&A";
 
-  const hearts = document.createElement("div");
-  hearts.className = "hearts";
-  hearts.setAttribute("aria-hidden", "true");
-  hearts.innerHTML =
-    '<div class="heart a1"></div><div class="heart a2 gold"></div><div class="heart a3"></div>' +
-    '<div class="heart a4 gold"></div><div class="heart a5"></div><div class="heart a6 gold"></div>';
-
-  envelope.append(letter, liner, pocket, flap, hearts, wax);
+  envelope.append(letter, liner, pocket, flap, wax);
   wrapper.append(envelope);
 
   const hint = document.createElement("p");
@@ -201,12 +388,14 @@ setInterval(tick, 1000);
     sessionStorage.setItem("opened-shivali", "1");
     envelope.classList.remove("close");
     envelope.classList.add("open");
+    el.classList.add("opening");
     hint.textContent = "";
+    // The card settles at about 1.6s; hold it long enough to read, then go.
     window.setTimeout(() => {
       el.classList.add("done");
       document.body.classList.remove("locked");
-      window.setTimeout(() => el.remove(), 650);
-    }, 3200);
+      window.setTimeout(() => el.remove(), 700);
+    }, 2900);
   };
 
   el.addEventListener("click", open);

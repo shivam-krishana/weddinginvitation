@@ -27,7 +27,6 @@
   --env-liner: #8d2340;
   --env-width: min(88vw, 440px);
   --env-height: calc(var(--env-width) * 0.66);
-  --heart-size: 24px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,6 +56,11 @@ body {
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
 }
+
+/* A full-screen blend layer forces the whole viewport to re-composite on
+   every frame, which the envelope fold can feel. It is not visible behind
+   the intro anyway, so it stands down until the overlay is gone. */
+body.locked .grain { display: none; }
 
 .scroll-progress {
   position: fixed;
@@ -154,10 +158,10 @@ body {
 /* ---------- Type ---------- */
 .kicker {
   font-family: "Cinzel", serif;
-  font-size: .7rem;
+  font-size: .86rem;
   font-weight: 600;
-  letter-spacing: .34em;
-  text-indent: .34em;
+  letter-spacing: .26em;
+  text-indent: .26em;
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -189,10 +193,10 @@ body {
   align-items: center;
   gap: .9rem;
   font-family: "Cinzel", serif;
-  font-size: .72rem;
+  font-size: .86rem;
   font-weight: 400;
-  letter-spacing: .5em;
-  text-indent: .5em;
+  letter-spacing: .42em;
+  text-indent: .42em;
   text-transform: uppercase;
   color: var(--accent);
   margin: .7rem 0;
@@ -221,10 +225,10 @@ body {
 .event-time { font-size: 1.3rem; letter-spacing: .1em; color: var(--cream); }
 .when {
   font-family: "Cinzel", serif;
-  font-size: .72rem;
+  font-size: .94rem;
   font-weight: 400;
-  letter-spacing: .28em;
-  text-indent: .28em;
+  letter-spacing: .2em;
+  text-indent: .2em;
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -269,6 +273,132 @@ body {
   object-fit: cover;
   object-position: 50% 32%;
   clip-path: url(#archClip);
+}
+
+/* ---------- Band ornaments ---------- */
+
+/* Bands without a painting get a drawn ogee arch instead, echoing the frames
+   around the paintings rather than boxing the text in a rectangle. */
+.arch-line.reveal {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(94vw, 640px);
+  height: min(88%, 660px);
+  margin-left: calc(min(94vw, 640px) / -2);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transform: none;
+  transition: opacity 1.4s ease;
+}
+.arch-line.reveal.in { opacity: .5; transform: none; }
+.arch-line svg { width: 100%; height: 100%; }
+.arch-line .draw { transition: stroke-dashoffset 2.8s cubic-bezier(.3, .7, .3, 1); }
+.arch-line .draw + .draw { stroke-opacity: .5; transition-delay: .25s; }
+
+/* Real marigold toran, hung across the top of the invitation band */
+.garland {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  margin: 0 auto;
+  z-index: 0;
+  pointer-events: none;
+  transform-origin: 50% 0;
+  filter: drop-shadow(0 10px 16px rgba(90, 40, 0, .3));
+  animation: garlandSway 9s ease-in-out infinite alternate;
+}
+/* The band opens with the garland, so the invitation starts below it */
+.band.band--saffron { padding-top: calc(min(100vw, 760px) * 0.47 + 2rem); }
+
+/* Brass kalash standing on the lower rule of the framed band */
+.kalash.reveal {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(16px, 3.2vw, 38px);
+  width: clamp(78px, 13vw, 128px);
+  height: auto;
+  margin-left: calc(clamp(78px, 13vw, 128px) / -2);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(14px);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, .4));
+}
+.kalash.reveal.in { opacity: 1; transform: none; }
+
+/* Drawn ornaments: pathLength="1" lets one dash rule draw every shape */
+.draw {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.in .draw { stroke-dashoffset: 0; }
+
+/* .reveal is the observer's hook; these need to beat its opacity rules */
+.rangoli.reveal {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: min(92vw, 520px);
+  aspect-ratio: 1;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 1.6s ease;
+}
+.rangoli.reveal.in { opacity: .34; transform: translate(-50%, -50%); }
+.rangoli svg { width: 100%; height: 100%; }
+.rangoli .draw { stroke-opacity: .85; transition: stroke-dashoffset 3.4s cubic-bezier(.3, .7, .3, 1); }
+
+/* Marigold petals */
+.petals { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.petals i {
+  position: absolute;
+  top: -8%;
+  border-radius: 60% 60% 55% 55% / 70% 70% 40% 40%;
+  background: radial-gradient(circle at 35% 30%, #ffe3a0, #f0a33c 60%, #c96f17);
+  opacity: .85;
+  will-change: transform;
+  animation: petalFall linear infinite, petalSway ease-in-out infinite alternate;
+}
+
+/* Fireworks */
+.fireworks { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.fireworks i {
+  position: absolute;
+  width: 2.5px;
+  height: 2.5px;
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: burst 4.6s linear infinite;
+}
+
+/* Embers */
+.embers { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.embers i {
+  position: absolute;
+  bottom: 28%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffcf7a;
+  box-shadow: 0 0 7px rgba(255, 186, 92, .9);
+  opacity: 0;
+  will-change: transform;
+  animation: emberRise linear infinite, emberDrift ease-in-out infinite alternate;
 }
 
 /* ---------- Hero ---------- */
@@ -318,6 +448,7 @@ body {
   pointer-events: none;
 }
 /* Behind text rather than beside it, so the band stays readable */
+.lanterns { opacity: .85; }
 .lanterns--sparse { opacity: .55; }
 .lantern {
   position: absolute;
@@ -345,8 +476,8 @@ body {
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
   font-family: "Cinzel", serif;
-  font-size: .56rem;
-  letter-spacing: .18em;
+  font-size: .7rem;
+  letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--cream-dim);
 }
@@ -361,9 +492,9 @@ body {
 }
 .countdown-label {
   font-family: "Cinzel", serif;
-  font-size: .62rem;
-  letter-spacing: .24em;
-  text-indent: .24em;
+  font-size: .82rem;
+  letter-spacing: .2em;
+  text-indent: .2em;
   text-transform: uppercase;
   color: var(--cream-dim);
   margin-top: .7rem;
@@ -386,9 +517,9 @@ body {
   align-items: center;
   gap: .5rem;
   font-family: "Cinzel", serif;
-  font-size: .62rem;
-  letter-spacing: .3em;
-  text-indent: .3em;
+  font-size: .8rem;
+  letter-spacing: .24em;
+  text-indent: .24em;
   text-transform: uppercase;
   color: var(--accent);
   text-decoration: none;
@@ -397,13 +528,14 @@ body {
 
 /* ---------- Buttons ---------- */
 .actions { display: flex; gap: .7rem; justify-content: center; flex-wrap: wrap; }
+.actions .btn { width: min(100%, 17.5rem); }
 .btn {
   display: inline-block;
   font: inherit;
-  font-size: .76rem;
+  font-size: .9rem;
   font-family: "Cinzel", serif;
-  letter-spacing: .18em;
-  text-indent: .18em;
+  letter-spacing: .15em;
+  text-indent: .15em;
   text-transform: uppercase;
   cursor: pointer;
   padding: .75rem 1.6rem;
@@ -426,13 +558,37 @@ body {
 
 /* ---------- Footer ---------- */
 footer.band { min-height: 62vh; }
-.diya { width: 98px; height: auto; margin-bottom: .6rem; overflow: visible; }
-.diya-bowl { fill: #7d2238; }
-.diya-base { fill: #5d1828; }
-.diya-glow { fill: #e8a33d; opacity: .35; }
-.diya-flame { transform-origin: 60px 32px; animation: flicker 2.4s ease-in-out infinite; }
-.flame-outer { fill: #e8a33d; filter: drop-shadow(0 0 14px rgba(232, 163, 61, .95)); }
+.diya {
+  position: relative;
+  width: clamp(118px, 24vw, 164px);
+  margin-bottom: .5rem;
+  line-height: 0;
+}
+.diya svg { width: 100%; height: auto; overflow: visible; }
+.diya-rim { fill: #c8912f; }
+.diya-bowl { fill: #8d2a40; }
+.diya-oil { fill: #b8563f; }
+.diya-base { fill: #6b1d30; }
+.diya-dots { fill: #e8c87a; opacity: .9; }
+.diya-scallop { fill: none; stroke: #e0bc6e; stroke-width: 1.6; stroke-opacity: .75; }
+.diya-wick { fill: #4a2d16; }
+.diya-flame { transform-origin: 80px 44px; animation: flicker 2.6s ease-in-out infinite; }
+.flame-outer { fill: #e8831d; opacity: .75; }
+.flame-mid { fill: #f6b53c; }
 .flame-inner { fill: #fff3cf; }
+/* The glow is a separate layer so the flame itself never has to repaint */
+.diya-halo {
+  position: absolute;
+  top: -14%;
+  left: 50%;
+  width: 150%;
+  aspect-ratio: 1;
+  margin-left: -75%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 190, 96, .45) 0%, rgba(255, 170, 70, .14) 36%, transparent 66%);
+  animation: glowPulse 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
 .compliments-name {
   font-family: "Great Vibes", cursive;
   font-size: clamp(2.1rem, 9vw, 2.9rem);
@@ -463,6 +619,8 @@ body.locked { overflow: hidden; }
   animation: haloBreathe 5s ease-in-out infinite;
   pointer-events: none;
 }
+/* Nothing else moves while the envelope opens */
+.intro.opening::after { animation-play-state: paused; }
 
 .intro-hint {
   position: relative;
@@ -508,16 +666,26 @@ body.locked { overflow: hidden; }
 #envelope .flap {
   height: 59.6%;
   transform-origin: top;
+  transform: rotateX(0deg);
+  transform-style: preserve-3d;
+  will-change: transform;
   z-index: 5;
-  filter: drop-shadow(0 7px 9px rgba(0, 0, 0, .35));
 }
+#envelope .flap-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* rotateX already mirrors the sheet, so the artwork is flipped back */
+#envelope .flap-face--back { transform: rotateX(180deg); }
+#envelope .flap-face--back svg { transform: scaleY(-1); }
 #envelope .pocket {
   bottom: 0;
   z-index: 3;
   border-radius: 0 0 10px 10px;
   overflow: hidden;
 }
-#envelope .paper { transition: fill .5s .25s ease; }
 #envelope .foil {
   fill: none;
   stroke: #a9801f;
@@ -556,9 +724,10 @@ body.locked { overflow: hidden; }
   color: #ffe9c6;
   background: radial-gradient(circle at 34% 30%, #b8395a, var(--env-liner) 72%);
   box-shadow: 0 6px 16px rgba(0, 0, 0, .5), inset 0 0 0 3px rgba(255, 233, 198, .35);
-  transition: transform .35s ease, opacity .35s ease;
+  transition: transform .4s cubic-bezier(.3, 0, .2, 1), opacity .4s ease;
+  will-change: transform, opacity;
 }
-#envelope.open .wax { transform: scale(.4) rotate(25deg); opacity: 0; }
+#envelope.open .wax { transform: scale(.35) rotate(22deg); opacity: 0; }
 
 #envelope .letter {
   position: relative;
@@ -578,6 +747,7 @@ body.locked { overflow: hidden; }
   padding: .9rem .7rem calc(var(--env-height) * 0.14);
   color: #2b2118;
   z-index: 1;
+  will-change: transform;
 }
 #envelope .letter::before {
   content: "";
@@ -589,10 +759,10 @@ body.locked { overflow: hidden; }
 }
 .letter-eyebrow {
   font-family: "Cinzel", serif;
-  font-size: .6rem;
+  font-size: .72rem;
   font-weight: 600;
-  letter-spacing: .28em;
-  text-indent: .28em;
+  letter-spacing: .22em;
+  text-indent: .22em;
   text-transform: uppercase;
   color: #8a6a14;
 }
@@ -605,51 +775,30 @@ body.locked { overflow: hidden; }
 .letter-names span { font-family: "Cinzel", serif; font-size: .68rem; color: #8a6a14; vertical-align: middle; }
 .letter-date { font-size: .95rem; font-weight: 600; letter-spacing: .05em; color: #5c4a35; }
 
+/* One continuous gesture: the seal breaks, the flap folds back, the card
+   rises. The envelope stops bobbing while it opens, so the float and the
+   fold are never fighting over the same transform. */
+#envelope.open { animation: none; }
+/* z-index is discrete, so a 0s transition with a delay flips it at an exact
+   moment: the flap drops behind as it passes upright, the card comes to the
+   front only once it starts clearing the pocket. */
+/* Inside a preserve-3d parent the layers are sorted by depth, not z-index,
+   so the folded flap is pushed a few pixels behind the card's plane. */
 #envelope.open .flap {
-  transform: rotateX(180deg);
-  transition: transform .5s ease, z-index .6s;
+  transform: rotateX(180deg) translateZ(6px);
+  transition: transform .75s .12s cubic-bezier(.45, .05, .25, 1), z-index 0s .45s;
   z-index: 1;
 }
-#envelope.open .flap .paper { fill: var(--env-liner); }
 #envelope.close .flap {
-  transform: rotateX(0deg);
-  transition: transform .4s .6s ease, z-index 1s;
+  transition: transform .45s .7s cubic-bezier(.45, .05, .25, 1);
   z-index: 5;
 }
-#envelope.close .letter { transform: translateY(0); transition: transform .4s ease, z-index 1s; z-index: 1; }
+#envelope.close .letter { transform: translateY(0); transition: transform .4s ease; z-index: 1; }
 #envelope.open .letter {
-  transform: translateY(calc(var(--env-height) * -0.56)) scale(1.03);
-  transition: transform .85s .55s cubic-bezier(.22, .9, .3, 1), z-index .6s;
+  transform: translate3d(0, calc(var(--env-height) * -0.56), 0);
+  transition: transform .95s .62s cubic-bezier(.18, .86, .28, 1), z-index 0s .62s;
   z-index: 4;
 }
-
-#envelope .hearts { position: absolute; top: calc(var(--env-height) * 0.5); left: 0; right: 0; z-index: 3; pointer-events: none; }
-#envelope .heart { position: absolute; bottom: 0; opacity: 0; filter: drop-shadow(0 0 10px rgba(255, 164, 54, .5)); }
-#envelope .heart::before,
-#envelope .heart::after {
-  position: absolute;
-  content: "";
-  left: var(--heart-size);
-  top: 0;
-  width: var(--heart-size);
-  height: calc(var(--heart-size) * 1.6);
-  background: linear-gradient(160deg, #e8738f, #a93a62);
-  border-radius: var(--heart-size) var(--heart-size) 0 0;
-  transform: rotate(-45deg);
-  transform-origin: 0 100%;
-}
-#envelope .heart::after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
-#envelope .heart.gold::before,
-#envelope .heart.gold::after { background: linear-gradient(160deg, #f6e0a7, var(--gold-deep)); }
-
-#envelope.close .heart { opacity: 0; animation: none; }
-#envelope.open .heart { opacity: 1; animation-fill-mode: forwards; }
-#envelope.open .heart.a1 { left: 18%; transform: scale(.55); animation: slideUp 4.6s linear 1, sideSway 2s ease-in-out 4 alternate; animation-delay: .7s; }
-#envelope.open .heart.a2 { left: 52%; transform: scale(.9); animation: slideUp 5.4s linear 1, sideSway 4s ease-in-out 2 alternate; animation-delay: .8s; }
-#envelope.open .heart.a3 { left: 8%; transform: scale(.72); animation: slideUp 6.4s linear 1, sideSway 2.4s ease-in-out 6 alternate; animation-delay: 1s; }
-#envelope.open .heart.a4 { left: 72%; transform: scale(.6); animation: slideUp 5.8s linear 1, sideSway 3s ease-in-out 4 alternate; animation-delay: .95s; }
-#envelope.open .heart.a5 { left: 36%; transform: scale(.45); animation: slideUp 7s linear 1, sideSway 2.6s ease-in-out 5 alternate; animation-delay: 1.2s; }
-#envelope.open .heart.a6 { left: 86%; transform: scale(.5); animation: slideUp 6s linear 1, sideSway 3.4s ease-in-out 3 alternate; animation-delay: 1.35s; }
 
 /* ---------- Motion ---------- */
 .reveal {
@@ -669,9 +818,17 @@ body.locked { overflow: hidden; }
 @keyframes envFloat { 50% { transform: translateY(-10px); } }
 @keyframes flicker {
   0%, 100% { transform: scale(1) skewX(0deg); }
-  25% { transform: scale(1.06, .96) skewX(2.5deg); }
-  50% { transform: scale(.95, 1.08) skewX(-2deg); }
-  75% { transform: scale(1.04, .98) skewX(1.5deg); }
+  25% { transform: scale(1.05, .95) skewX(2.5deg); }
+  50% { transform: scale(.95, 1.07) skewX(-2deg); }
+  75% { transform: scale(1.03, .98) skewX(1.5deg); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: .85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.07); }
+}
+@keyframes garlandSway {
+  from { transform: rotate(-.5deg); }
+  to { transform: rotate(.5deg); }
 }
 @keyframes lanternRise {
   0% { transform: translate3d(0, 0, 0) rotate(-3deg); opacity: 0; }
@@ -680,18 +837,33 @@ body.locked { overflow: hidden; }
   100% { transform: translate3d(0, -128vh, 0) rotate(4deg); opacity: 0; }
 }
 @keyframes lanternDrift { from { margin-left: -26px; } to { margin-left: 26px; } }
-@keyframes slideUp {
-  0% { top: 0; opacity: 0; }
-  12% { opacity: 1; }
-  85% { opacity: 1; }
-  100% { top: -620px; opacity: 0; }
+@keyframes petalFall {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  8% { opacity: .85; }
+  90% { opacity: .85; }
+  100% { transform: translate3d(0, 108vh, 0) rotate(260deg); opacity: 0; }
 }
-@keyframes sideSway { 0% { margin-left: 0; } 100% { margin-left: 46px; } }
+@keyframes petalSway { from { margin-left: -20px; } to { margin-left: 20px; } }
+@keyframes burst {
+  0% { transform: scale(.08); opacity: 0; }
+  3% { opacity: 1; }
+  26% { transform: scale(1.15); opacity: .6; }
+  38% { transform: scale(1.3); opacity: 0; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+@keyframes emberRise {
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
+  12% { opacity: 1; }
+  100% { transform: translate3d(0, -34vh, 0) scale(.3); opacity: 0; }
+}
+@keyframes emberDrift { from { margin-left: -14px; } to { margin-left: 14px; } }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition-duration: .01ms !important; }
   .reveal, .arch.reveal { opacity: 1; transform: none; }
-  .lanterns { display: none; }
+  .rangoli.reveal { opacity: .3; }
+  .draw { stroke-dashoffset: 0; }
+  .lanterns, .petals, .fireworks, .embers { display: none; }
   #envelope.open .letter { transform: translateY(calc(var(--env-height) * -0.56)); transition: none; }
   #envelope.open .flap { transform: rotateX(180deg); transition: none; }
 }
@@ -700,9 +872,10 @@ body.locked { overflow: hidden; }
   body { font-size: 1.08rem; }
   .band { padding: 4rem 1.25rem; min-height: 72vh; }
   .countdown { gap: .4rem; }
-  .countdown div { min-width: 62px; padding: .5rem .25rem; letter-spacing: .1em; }
+  .countdown div { min-width: 66px; padding: .5rem .25rem; letter-spacing: .08em; }
+  .actions .btn { width: min(100%, 17.5rem); }
   .countdown b { font-size: 1.6rem; }
   .arch { width: min(84%, 280px); padding: 9px; }
   .lantern { width: 36px; }
-  .diya { width: 82px; }
+  .diya { width: clamp(104px, 26vw, 136px); }
 }

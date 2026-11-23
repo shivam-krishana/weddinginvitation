@@ -19,15 +19,19 @@ OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FEATHER = 62
 
 
-def knock_out_white(src_name, out_name, width, crop_top=0.0, colors=0):
+def knock_out_white(src_name, out_name, width, crop_top=0.0, crop_bottom=0.0,
+                    colors=0, feather=FEATHER, trim=False):
     """Turn a white studio background into transparency and save a sized PNG.
 
-    crop_top discards that fraction of empty space off the top; colors, when set,
-    quantises the result, which shrinks flat silhouettes dramatically.
+    crop_top and crop_bottom discard those fractions of empty space; trim crops to
+    whatever is left opaque; colors, when set, quantises the result, which
+    shrinks flat silhouettes dramatically. A smaller feather keeps near-white
+    detail such as a flame tip, at the cost of a harder cut-out edge.
     """
     img = Image.open(os.path.join(ASSETS, src_name)).convert("RGB")
-    if crop_top:
-        img = img.crop((0, round(img.size[1] * crop_top), img.size[0], img.size[1]))
+    if crop_top or crop_bottom:
+        img = img.crop((0, round(img.size[1] * crop_top),
+                        img.size[0], round(img.size[1] * (1 - crop_bottom))))
     pixels = img.load()
     out = Image.new("RGBA", img.size)
     out_pixels = out.load()
@@ -36,8 +40,13 @@ def knock_out_white(src_name, out_name, width, crop_top=0.0, colors=0):
         for x in range(img.size[0]):
             r, g, b = pixels[x, y]
             distance = 255 - min(r, g, b)
-            alpha = 255 if distance >= FEATHER else int(distance * 255 / FEATHER)
+            alpha = 255 if distance >= feather else int(distance * 255 / feather)
             out_pixels[x, y] = (r, g, b, alpha)
+
+    if trim:
+        box = out.getbbox()
+        if box:
+            out = out.crop(box)
 
     height = round(out.size[1] * width / out.size[0])
     out = out.resize((width, height), Image.LANCZOS)
@@ -58,7 +67,11 @@ def to_jpeg(src_name, out_name, width, quality=72):
 
 knock_out_white("art-lantern.png", "lantern.png", 150)
 knock_out_white("art-skyline.png", "skyline.png", 1400, crop_top=0.42, colors=24)
+# The marigold toran hangs over the invitation band, so it keeps its alpha.
+knock_out_white("art-toran-painted.png", "garland.png", 1100,
+                crop_bottom=0.22, colors=160, trim=True)
 
 to_jpeg("art-couple.png", "art-couple.jpg", 620)
+to_jpeg("art-satsang.png", "art-satsang.jpg", 620)
 to_jpeg("art-mehndi.png", "art-mehndi.jpg", 620)
 to_jpeg("art-baraat.png", "art-baraat.jpg", 620)

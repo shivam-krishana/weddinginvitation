@@ -60,11 +60,12 @@
 
     <!-- Invitation -->
     <section id="invitation" class="band band--saffron band--tall">
+      <img class="garland" src="garland.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
       <div class="band-inner">
         <figure class="arch reveal">
           <img src="art-couple.jpg" alt="A miniature painting of a bride and groom exchanging garlands" loading="lazy" decoding="async">
         </figure>
-        <p class="kicker reveal">Together with our families</p>
+        <p class="kicker reveal">Invitation</p>
         <p class="lead reveal">There are moments in life too joyful to celebrate alone.</p>
         <p class="reveal">With hearts full of happiness and gratitude, our family requests the honour of your presence and your affectionate blessings on the auspicious occasion of the marriage of</p>
         <p class="pair reveal">Shivali <em>&amp;</em> Aastik</p>
@@ -75,6 +76,7 @@
 
     <!-- Celebrations -->
     <section class="band band--jade event">
+      <div class="arch-line reveal" aria-hidden="true"><svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMax meet"><path class="draw" d="M0 400 V160 C0 88 42 46 90 26 C126 13 141 6 150 0 C159 6 174 13 210 26 C258 46 300 88 300 160 V400"/><path class="draw" d="M14 400 V162 C14 96 54 58 98 39 C131 26 144 18 150 12 C156 18 169 26 202 39 C246 58 286 96 286 162 V400"/></svg></div>
       <div class="band-inner">
         <p class="kicker reveal">On the following occasions</p>
         <p class="when reveal">Sunday · 17<sup>th</sup> January 2027</p>
@@ -86,8 +88,11 @@
       </div>
     </section>
 
-    <section class="band band--plum event">
+    <section class="band band--plum band--tall event">
       <div class="band-inner">
+        <figure class="arch reveal">
+          <img src="art-satsang.jpg" alt="A miniature painting of women at prayer before a shrine" loading="lazy" decoding="async">
+        </figure>
         <p class="when reveal">Monday · 18<sup>th</sup> January 2027</p>
         <h2 class="event-name reveal">Satsang</h2>
         <p class="event-time reveal">11:00 am – 3:00 pm</p>
@@ -98,6 +103,7 @@
     </section>
 
     <section class="band band--ochre event">
+      <div class="petals" id="petals" aria-hidden="true"></div>
       <div class="band-inner">
         <p class="when reveal">Wednesday · 20<sup>th</sup> January 2027</p>
         <h2 class="event-name reveal">Lunch</h2>
@@ -123,6 +129,7 @@
     </section>
 
     <section class="band band--jade event">
+      <div class="rangoli reveal" id="rangoli" aria-hidden="true"></div>
       <div class="band-inner">
         <p class="when reveal">Saturday · 23<sup>rd</sup> January 2027</p>
         <h2 class="event-name reveal">Saanth</h2>
@@ -135,6 +142,7 @@
 
     <section class="band band--night band--tall event">
       <div class="lanterns lanterns--sparse" id="lanterns2" aria-hidden="true"></div>
+      <div class="fireworks" id="fireworks" aria-hidden="true"></div>
       <div class="band-inner">
         <figure class="arch reveal">
           <img src="art-baraat.jpg" alt="A miniature painting of a baraat procession at night" loading="lazy" decoding="async">
@@ -150,6 +158,7 @@
 
     <!-- RSVP -->
     <section id="rsvp" class="band band--plum">
+      <div class="arch-line reveal" aria-hidden="true"><svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMax meet"><path class="draw" d="M0 400 V160 C0 88 42 46 90 26 C126 13 141 6 150 0 C159 6 174 13 210 26 C258 46 300 88 300 160 V400"/><path class="draw" d="M14 400 V162 C14 96 54 58 98 39 C131 26 144 18 150 12 C156 18 169 26 202 39 C246 58 286 96 286 162 V400"/></svg></div>
       <div class="band-inner">
         <p class="kicker reveal">We would be delighted to hear from you</p>
         <h2 class="event-name reveal">Please R.S.V.P.</h2>
@@ -163,16 +172,31 @@
   </main>
 
   <footer class="band band--night">
+    <div class="embers" id="embers" aria-hidden="true"></div>
     <div class="band-inner">
-      <svg class="diya reveal" viewBox="0 0 120 90" aria-hidden="true" focusable="false">
-        <g class="diya-flame">
-          <path class="flame-outer" d="M60 8c7 10 12 16 12 23a12 12 0 0 1-24 0c0-7 5-13 12-23z"/>
-          <path class="flame-inner" d="M60 22c3 5 5 8 5 11a5 5 0 0 1-10 0c0-3 2-6 5-11z"/>
-        </g>
-        <path class="diya-glow" d="M60 44c22 0 36 2 36 6s-14 8-36 8-36-4-36-8 14-6 36-6z"/>
-        <path class="diya-bowl" d="M26 52h68c-3 14-15 22-34 22S29 66 26 52z"/>
-        <path class="diya-base" d="M44 76h32c0 4-7 6-16 6s-16-2-16-6z"/>
-      </svg>
+      <div class="diya reveal">
+        <span class="diya-halo" aria-hidden="true"></span>
+        <svg viewBox="0 0 160 120" aria-hidden="true" focusable="false">
+          <g class="diya-flame">
+            <path class="flame-outer" d="M80 6c10 14 17 23 17 33a17 17 0 0 1-34 0c0-10 7-19 17-33z"/>
+            <path class="flame-mid" d="M80 20c6 9 10 15 10 21a10 10 0 0 1-20 0c0-6 4-12 10-21z"/>
+            <path class="flame-inner" d="M80 34c3 5 5 8 5 11a5 5 0 0 1-10 0c0-3 2-6 5-11z"/>
+          </g>
+          <path class="diya-wick" d="M77 56c1-4 5-4 6 0 1 4-7 4-6 0z"/>
+          <path class="diya-oil" d="M34 62h92c-2 5-22 9-46 9s-44-4-46-9z"/>
+          <path class="diya-bowl" d="M28 60h104c-3 19-22 30-52 30S31 79 28 60z"/>
+          <path class="diya-rim" d="M28 56h104v7H28z"/>
+          <g class="diya-dots">
+            <circle cx="40" cy="60" r="2"/><circle cx="54" cy="60" r="2"/><circle cx="68" cy="60" r="2"/>
+            <circle cx="82" cy="60" r="2"/><circle cx="96" cy="60" r="2"/><circle cx="110" cy="60" r="2"/>
+            <circle cx="124" cy="60" r="2"/>
+          </g>
+          <g class="diya-scallop">
+            <path d="M40 70c4 7 11 7 15 0M62 74c4 7 11 7 15 0M84 74c4 7 11 7 15 0M106 70c4 7 11 7 15 0"/>
+          </g>
+          <path class="diya-base" d="M58 88h44c0 6-9 9-22 9s-22-3-22-9z"/>
+        </svg>
+      </div>
       <p class="kicker reveal">With Compliments From</p>
       <p class="compliments-name reveal">Near &amp; Dear Ones</p>
     </div>
