@@ -94,7 +94,7 @@ setInterval(tick, 1000);
       el.classList.add("done");
       document.body.classList.remove("locked");
       window.setTimeout(() => el.remove(), 550);
-    }, 2400);
+    }, 3200);
   };
 
   el.addEventListener("click", open);
