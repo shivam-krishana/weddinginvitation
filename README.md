@@ -20,6 +20,7 @@ dependencies. Open `index.html` in a browser to preview.
 | `skyline.png` | Temple and haveli silhouette along the bottom of the hero |
 | `lantern.png` | The sky lantern, cloned and animated upward on the night bands |
 | `mandala.svg`, `pattern-bg.svg`, `floral-corner.jpg` | Earlier artwork, no longer referenced |
+| `og.jpg` | Link-preview image for WhatsApp, Instagram, iMessage (Open Graph) |
 | `favicon.svg`, `apple-touch-icon.svg` | The "S&A" monogram icons |
 | `tools/prepare-art.py` | Turns the source paintings into the web-sized assets above |
 
