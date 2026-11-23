@@ -26,7 +26,7 @@
   --scroll-w: calc(var(--scroll-h) / 1.5);
   --scroll-rw: calc(var(--scroll-w) * 1.14);
   --scroll-rh: calc(var(--scroll-rw) / 14.06);
-  --scroll-unroll: 1.5s cubic-bezier(.22, .72, .24, 1);
+  --scroll-unroll: 1.65s cubic-bezier(.2, .78, .22, 1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -739,21 +739,24 @@ body.locked { overflow: hidden; }
   margin: calc(var(--scroll-h) / -2) 0 0 calc(var(--scroll-w) / -2);
   transform: translateY(calc(var(--scroll-h) / 2 - var(--scroll-rh) * 0.58));
   transition: transform var(--scroll-unroll);
-  contain: layout style paint;
+  will-change: transform;
 }
 .intro-scroll.open { transform: translateY(0); }
 
 .intro-scroll .scroll-sheet {
   position: absolute;
-  inset: 0;
+  left: 0;
+  width: 100%;
+  top: calc(var(--scroll-rh) * 0.4);
+  height: calc(var(--scroll-rh) * 1.32);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  -webkit-clip-path: inset(0 0 100% 0);
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path var(--scroll-unroll), -webkit-clip-path var(--scroll-unroll);
+  transition: height var(--scroll-unroll);
+  will-change: height;
 }
 .intro-scroll.open .scroll-sheet {
-  -webkit-clip-path: inset(0 0 0 0);
-  clip-path: inset(0 0 0 0);
+  height: calc(100% - var(--scroll-rh) * 0.4);
 }
 .intro-scroll.open .scroll-sheet-inner {
   visibility: visible;
@@ -761,8 +764,10 @@ body.locked { overflow: hidden; }
 }
 
 .scroll-sheet-inner {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: calc(var(--scroll-h) - var(--scroll-rh) * 1.75);
   background: #efe0bd url("scroll-page.jpg") center / cover no-repeat;
   display: flex;
   flex-direction: column;
@@ -821,12 +826,11 @@ body.locked { overflow: hidden; }
 }
 .scroll-rod--top { top: calc(var(--scroll-rh) * -0.55); z-index: 4; }
 .scroll-rod--bot {
-  top: calc(var(--scroll-rh) * 0.52);
-  z-index: 2;
-  transition: transform var(--scroll-unroll);
-}
-.intro-scroll.open .scroll-rod--bot {
-  transform: translateY(calc(var(--scroll-h) - var(--scroll-rh) * 0.7));
+  position: relative;
+  flex-shrink: 0;
+  top: auto;
+  margin: calc(var(--scroll-rh) * -0.2) auto 0;
+  z-index: 3;
 }
 .scroll-rod--bot::after {
   content: "";
@@ -842,10 +846,10 @@ body.locked { overflow: hidden; }
   box-shadow:
     0 8px 18px rgba(0, 0, 0, .45),
     inset 0 0 0 1px rgba(124, 90, 40, .3);
-  transform-origin: center;
-  transition: transform var(--scroll-unroll), opacity var(--scroll-unroll);
+  transform-origin: center top;
+  transition: transform var(--scroll-unroll), opacity calc(var(--scroll-unroll) * 0.75);
 }
-.intro-scroll.open .scroll-rod--bot::after { transform: scaleY(.12); opacity: .5; }
+.intro-scroll.open .scroll-rod--bot::after { transform: scaleY(0); opacity: 0; }
 .scroll-rod--bot::before {
   content: "";
   position: absolute;
@@ -855,7 +859,10 @@ body.locked { overflow: hidden; }
   height: calc(var(--scroll-rh) * 1.1);
   background: linear-gradient(to top, rgba(60, 34, 10, .38), transparent);
   pointer-events: none;
+  opacity: 1;
+  transition: opacity calc(var(--scroll-unroll) * 0.6);
 }
+.intro-scroll.open .scroll-rod--bot::before { opacity: 0; }
 
 .scroll-cord {
   position: absolute;
@@ -935,11 +942,11 @@ body.locked { overflow: hidden; }
   .draw { stroke-dashoffset: 0; }
   .lanterns, .petals, .fireworks, .embers { display: none; }
   .intro-scroll.open { transform: translateY(0); transition: none; }
-  .intro-scroll.open .scroll-sheet { clip-path: inset(0 0 0 0); transition: none; }
-  .intro-scroll.open .scroll-rod--bot {
-    transform: translateY(calc(var(--scroll-h) - var(--scroll-rh) * 0.7));
+  .intro-scroll.open .scroll-sheet {
+    height: calc(100% - var(--scroll-rh) * 0.4);
     transition: none;
   }
+  .intro-scroll.open .scroll-rod--bot::after { transform: scaleY(0); opacity: 0; }
 }
 
 @media (max-width: 480px) {
