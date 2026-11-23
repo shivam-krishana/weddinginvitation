@@ -3,7 +3,6 @@
   --paper: #fffdf8;
   --gold: #a8801f;
   --gold-soft: #d9bf7a;
-  --rose: #c98a8a;
   --ink: #2b2420;
   --muted: #5c534c;
   --gold-text: #6e500d; /* deeper antique gold for text: ~7:1 contrast on ivory (bright --gold is for borders/ornaments) */
@@ -155,9 +154,6 @@ main { width: min(100% - 2rem, 680px); margin: 0 auto; padding-bottom: 2rem; }
 .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(168, 128, 31, .25); }
 
 footer { padding: 2rem 1rem 3rem; color: var(--muted); }
-.heart { color: var(--rose); }
-.credit { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--gold-soft); font-family: "Cinzel", serif; font-size: .85rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-text); }
-
 /* ---------- Opening seal ---------- */
 .intro {
   position: fixed; inset: 0; z-index: 100; border: 0; cursor: pointer; font: inherit; color: var(--ink);
