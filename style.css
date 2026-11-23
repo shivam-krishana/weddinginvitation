@@ -38,6 +38,7 @@ body {
 }
 
 .frame {
+  position: relative;
   width: min(100%, 720px);
   min-height: calc(100vh - 2.4rem);
   padding: 2.5rem 1.5rem;
@@ -53,6 +54,22 @@ body {
   gap: .9rem;
   animation: fade 1.4s ease both;
 }
+
+/* L-shaped filigree tucked inside each corner of the frame */
+.corner {
+  position: absolute;
+  width: 28px; height: 28px;
+  border: 1px solid var(--gold);
+  pointer-events: none;
+}
+.corner.tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+.corner.tr { top: 20px; right: 20px; border-left: 0; border-bottom: 0; }
+.corner.bl { bottom: 20px; left: 20px; border-right: 0; border-top: 0; }
+.corner.br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+
+.flourish { width: min(70%, 280px); height: auto; margin: .2rem 0 .4rem; }
+.flourish path { fill: none; stroke: var(--gold); stroke-width: 1.2; }
+.flourish circle { fill: var(--gold); }
 
 .eyebrow {
   font-family: "Cinzel", serif;
@@ -78,11 +95,17 @@ body {
 .names small::after { transform: scaleX(-1); }
 
 .date { font-size: 1.5rem; font-weight: 600; letter-spacing: .05em; }
-.countdown { display: flex; gap: .7rem; margin-top: 1rem; flex-wrap: wrap; justify-content: center; }
+.countdown { display: flex; gap: .7rem; margin-top: 1.2rem; flex-wrap: wrap; justify-content: center; }
 .countdown div {
   min-width: 70px; padding: .55rem .3rem;
-  border: 1px solid var(--gold); border-radius: 6px;
-  font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .15em; color: var(--muted);
+  border: 1px solid var(--gold-soft); border-radius: 6px;
+  background: rgba(255, 253, 248, .6);
+  font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .15em; color: var(--muted);
+}
+.countdown-label {
+  font-family: "Cinzel", serif;
+  font-size: .7rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--muted); margin-top: .1rem;
 }
 .countdown b { display: block; font-family: "Cinzel", serif; font-size: 1.7rem; color: var(--gold-text); letter-spacing: 0; line-height: 1.2; }
 .countdown .done { border: none; font-size: 1.2rem; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--gold-text); }
@@ -175,4 +198,16 @@ body.locked { overflow: hidden; }
 
 @media (max-width: 480px) {
   body { font-size: 1.1rem; }
+  .frame { padding: 2rem 1rem; }
+  .corner { width: 20px; height: 20px; }
+  .corner.tl, .corner.tr { top: 14px; }
+  .corner.bl, .corner.br { bottom: 14px; }
+  .corner.tl, .corner.bl { left: 14px; }
+  .corner.tr, .corner.br { right: 14px; }
+  .date { font-size: 1.3rem; }
+  /* Keep all four units on one row */
+  .countdown { gap: .4rem; }
+  .countdown div { min-width: 60px; padding: .5rem .2rem; letter-spacing: .08em; }
+  .countdown b { font-size: 1.5rem; }
+  .countdown-label { letter-spacing: .16em; }
 }

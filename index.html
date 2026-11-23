@@ -19,14 +19,42 @@
   <!-- Cover -->
   <header class="cover">
     <div class="frame">
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+
       <p class="eyebrow">Wedding Invitation</p>
+
+      <svg class="flourish" viewBox="0 0 260 28" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="flourishLeft" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="var(--gold)" stop-opacity="0" />
+            <stop offset="1" stop-color="var(--gold)" stop-opacity="1" />
+          </linearGradient>
+          <linearGradient id="flourishRight" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="var(--gold)" stop-opacity="1" />
+            <stop offset="1" stop-color="var(--gold)" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <path d="M4 14 H104" stroke="url(#flourishLeft)" />
+        <path d="M156 14 H256" stroke="url(#flourishRight)" />
+        <path d="M130 4 C119 9.5, 119 18.5, 130 24 C141 18.5, 141 9.5, 130 4 Z" />
+        <circle cx="116" cy="14" r="2.6" />
+        <circle cx="144" cy="14" r="2.6" />
+      </svg>
+
       <h1 class="names">
         <span>Shivali</span>
         <small>weds</small>
         <span>Aastik</span>
       </h1>
+
       <p class="date">Saturday, 23rd January, 2027</p>
+
       <div id="countdown" class="countdown" aria-live="polite"></div>
+      <p class="countdown-label">until the celebrations begin</p>
+
       <a href="#invitation" class="scroll-hint">Scroll to open ↓</a>
     </div>
   </header>

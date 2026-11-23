@@ -74,10 +74,12 @@ if (to) document.title = `${to} · Shivali weds Aastik`;
 // Countdown to the wedding day
 const target = new Date(EVENTS[MAIN_EVENT].start + IST).getTime();
 const box = document.getElementById("countdown");
+const countdownLabel = document.querySelector(".countdown-label");
 function tick() {
   const diff = target - Date.now();
   if (diff <= 0) {
     box.innerHTML = '<div class="done">The celebrations have begun! 🎉</div>';
+    if (countdownLabel) countdownLabel.hidden = true;
     return;
   }
   const d = Math.floor(diff / 864e5);
