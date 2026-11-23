@@ -11,6 +11,7 @@ dependencies. Open `index.html` in a browser to preview.
 | `style.css` | Blush-and-gold theme, layout, the envelope animation, scroll motion |
 | `script.js` | Map links, countdown, envelope intro, petals, scroll-linked effects |
 | `mandala.svg` | The circular motif that turns behind the cover and the intro |
+| `floral-corner.jpg` | Watercolour corner bouquet, used on the cover and the opening screen |
 | `pattern-bg.svg` | Repeating tile used as a faint texture on the page and cards |
 | `favicon.svg`, `apple-touch-icon.svg` | The "S&A" monogram icons |
 
@@ -38,6 +39,14 @@ Scroll-linked effects live in one rAF-throttled handler at the bottom of `script
 
 Everything else is CSS: the drifting petals, the turning mandala, the drawn-on flourish, the
 frosted sticky "Celebrations" heading, the alternating card reveals and the footer diya's flame.
+
+## Artwork
+
+Everything visual in this repo was made for it — the mandala, the pattern tile, the icons and
+the watercolour bouquet. Nothing is stock, so there is no licence to honour and nobody to
+credit. The bouquet is painted on a white background rather than a transparent one;
+`mix-blend-mode: multiply` drops the white out against the blush page, which keeps the file
+small and the petal edges clean.
 
 ## Notes
 

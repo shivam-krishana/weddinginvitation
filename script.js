@@ -111,7 +111,16 @@ setInterval(tick, 1000);
   hint.className = "intro-hint";
   hint.textContent = "Tap to open";
 
-  el.append(wrapper, hint);
+  const blooms = ["bloom--tl", "bloom--br"].map((where) => {
+    const img = document.createElement("img");
+    img.className = "bloom " + where;
+    img.src = "floral-corner.jpg";
+    img.alt = "";
+    img.setAttribute("aria-hidden", "true");
+    return img;
+  });
+
+  el.append(...blooms, wrapper, hint);
   document.body.classList.add("locked");
   document.body.append(el);
 

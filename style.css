@@ -154,12 +154,37 @@ main, .cover, footer { position: relative; z-index: 1; }
 /* Separate layer so scroll parallax can transform the content without
    fighting the frame's own entrance animation */
 .frame-inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: .9rem;
   width: 100%;
   will-change: transform, opacity;
+}
+
+/* ---------- Watercolour corner bouquets ---------- */
+/* The artwork is painted on white; multiply drops the white out against the
+   blush page without needing an alpha channel. */
+.bloom {
+  position: absolute;
+  width: min(40%, 224px);
+  height: auto;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  opacity: 0;
+  animation: bloomIn 1.8s 1s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+.bloom--tl { top: 0; left: 0; }
+.bloom--br { bottom: 0; right: 0; --bloom-rot: 180deg; }
+
+/* Blooms framing the opening envelope */
+.intro .bloom {
+  width: min(44%, 300px);
+  animation-delay: .25s;
 }
 
 .frame--premium {
@@ -246,7 +271,7 @@ main, .cover, footer { position: relative; z-index: 1; }
   min-width: 70px; padding: .55rem .3rem;
   border: 1px solid var(--gold-soft);
   border-radius: 8px;
-  background: linear-gradient(180deg, rgba(255, 253, 248, .95), rgba(250, 240, 220, .7));
+  background: linear-gradient(180deg, #fffdf8, #faf1de);
   font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .15em; color: var(--muted);
   box-shadow: 0 4px 14px rgba(120, 90, 30, .08), inset 0 1px 0 rgba(255, 255, 255, .8);
 }
@@ -807,6 +832,10 @@ body.locked { overflow: hidden; }
 
 @keyframes fade { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: none; } }
 @keyframes fadeIn { to { opacity: 1; } }
+@keyframes bloomIn {
+  from { opacity: 0; transform: rotate(var(--bloom-rot, 0deg)) scale(.88); }
+  to { opacity: 1; transform: rotate(var(--bloom-rot, 0deg)) scale(1); }
+}
 @keyframes bob { 50% { transform: translateY(6px); } }
 @keyframes ambientDrift { from { opacity: .85; transform: scale(1); } to { opacity: 1; transform: scale(1.03); } }
 @keyframes spinSlow { to { transform: rotate(360deg); } }
