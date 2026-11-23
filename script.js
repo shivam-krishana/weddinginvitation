@@ -66,12 +66,23 @@ setInterval(tick, 1000);
     '<p class="letter-names">Shivali <span>&amp;</span> Aastik</p>' +
     '<p class="letter-date">23 January 2027</p>';
 
+  const wax = document.createElement("div");
+  wax.className = "wax";
+  wax.setAttribute("aria-hidden", "true");
+  wax.textContent = "S&A";
+
   const hearts = document.createElement("div");
   hearts.className = "hearts";
   hearts.setAttribute("aria-hidden", "true");
-  hearts.innerHTML = '<div class="heart a1"></div><div class="heart a2"></div><div class="heart a3"></div>';
+  hearts.innerHTML =
+    '<div class="heart a1"></div>' +
+    '<div class="heart a2 gold"></div>' +
+    '<div class="heart a3"></div>' +
+    '<div class="heart a4 gold"></div>' +
+    '<div class="heart a5"></div>' +
+    '<div class="heart a6 gold"></div>';
 
-  envelope.append(flap, pocket, letter, hearts);
+  envelope.append(flap, pocket, letter, hearts, wax);
   wrapper.append(envelope);
 
   const hint = document.createElement("p");
