@@ -54,9 +54,6 @@ body {
   animation: fade 1.4s ease both;
 }
 
-.deity { font-size: 3.2rem; color: var(--ink); line-height: 1; }
-.deity.sm { font-size: 2rem; }
-
 .eyebrow {
   font-family: "Cinzel", serif;
   letter-spacing: .28em;
@@ -120,7 +117,6 @@ main { width: min(100% - 2rem, 680px); margin: 0 auto; padding-bottom: 2rem; }
 }
 .card p, .event p { margin: .45rem 0; }
 .card .script { font-size: 3rem; color: var(--gold-text); line-height: 1.1; }
-.strong { font-weight: 600; }
 .script-line { font-size: 2rem; margin: .8rem 0 !important; }
 .script-name { font-size: 3rem; line-height: 1.2; margin: .6rem 0 !important; }
 .with { font-style: italic; color: var(--gold-text); }
