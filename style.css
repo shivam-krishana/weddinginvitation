@@ -6,7 +6,6 @@
   --ink: #2b2420;
   --muted: #5c534c;
   --gold-text: #6e500d; /* deeper antique gold for text: ~7:1 contrast on ivory (bright --gold is for borders/ornaments) */
-  --maroon: #7a2336;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
