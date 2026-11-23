@@ -748,6 +748,15 @@ body.locked { overflow: hidden; }
   inset: 0;
   overflow: hidden;
   z-index: 1;
+  /* Clip from the top rod downward: the page pays out, it does not stretch */
+  -webkit-clip-path: inset(0 0 100% 0);
+  clip-path: inset(0 0 100% 0);
+  transition: -webkit-clip-path var(--scroll-unroll), clip-path var(--scroll-unroll);
+  will-change: clip-path;
+}
+.intro-scroll.open .scroll-sheet {
+  -webkit-clip-path: inset(0 0 0 0);
+  clip-path: inset(0 0 0 0);
 }
 .intro-scroll.open .scroll-sheet-inner {
   visibility: visible;
@@ -757,10 +766,6 @@ body.locked { overflow: hidden; }
 .scroll-sheet-inner {
   position: absolute;
   inset: 0;
-  transform: scaleY(0);
-  transform-origin: top center;
-  transition: transform var(--scroll-unroll);
-  will-change: transform;
   background: #efe0bd url("scroll-page.jpg") center / cover no-repeat;
   display: flex;
   flex-direction: column;
@@ -807,8 +812,6 @@ body.locked { overflow: hidden; }
   text-indent: .14em;
   color: #5a3a16;
 }
-.intro-scroll.open .scroll-sheet-inner { transform: scaleY(1); }
-
 .scroll-rod {
   position: absolute;
   left: 50%;
@@ -938,7 +941,11 @@ body.locked { overflow: hidden; }
   .draw { stroke-dashoffset: 0; }
   .lanterns, .petals, .fireworks, .embers { display: none; }
   .intro-scroll.open { transform: translateY(0); transition: none; }
-  .intro-scroll.open .scroll-sheet-inner { transform: scaleY(1); transition: none; }
+  .intro-scroll.open .scroll-sheet {
+    -webkit-clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0);
+    transition: none;
+  }
   .intro-scroll.open .scroll-rod--bot {
     transform: translate3d(0, calc(var(--scroll-h) - var(--scroll-rh) * 1.07), 0);
     transition: none;
