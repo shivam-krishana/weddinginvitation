@@ -124,6 +124,15 @@ main { width: min(100% - 2rem, 680px); margin: 0 auto; padding-bottom: 2rem; }
 }
 .card p, .event p { margin: .45rem 0; }
 .card .script { font-size: 3rem; color: var(--gold-text); line-height: 1.1; }
+/* An abbreviation reads badly in the script face, so it gets the formal capitals instead */
+.rsvp-title {
+  font-family: "Cinzel", serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: .14em;
+  color: var(--gold-text);
+  margin-bottom: .6rem;
+}
 .script-line { font-size: 2rem; margin: .8rem 0 !important; }
 .script-name { font-size: 3rem; line-height: 1.2; margin: .6rem 0 !important; }
 .with { font-style: italic; color: var(--gold-text); }
