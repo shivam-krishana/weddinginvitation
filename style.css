@@ -12,10 +12,10 @@
   --ink: #2b2420;
   --muted: #5c534c;
   --gold-text: #6e500d;
-  --env: #c2294a;
-  --env2: #9b1c38;
-  --env-flap: #7d1630;
-  --env-liner: #f6cdd8;
+  --env: #f0a7b7;
+  --env2: #e58fa3;
+  --env-flap: #e897aa;
+  --env-liner: #fff4f7;
   --env-width: min(88vw, 460px);
   --env-height: calc(var(--env-width) * 0.66);
   --env-half: calc(var(--env-width) / 2);
@@ -545,10 +545,10 @@ body.locked { overflow: hidden; }
      the part of the liner behind the raised card */
   background-color: var(--env-liner);
   box-shadow:
-    0 26px 60px rgba(125, 22, 48, .3),
-    0 8px 20px rgba(125, 22, 48, .22),
-    0 0 0 1px rgba(168, 128, 31, .5),
-    0 0 0 4px rgba(255, 255, 255, .55);
+    0 26px 60px rgba(176, 85, 110, .28),
+    0 8px 20px rgba(176, 85, 110, .2),
+    0 0 0 1px rgba(168, 128, 31, .55),
+    0 0 0 5px rgba(255, 255, 255, .7);
   transform-style: preserve-3d;
   animation: envFloat 6s ease-in-out infinite;
 }
