@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Scroll opening — prototype</title>
+
+  <!-- Standalone on purpose: this is a prototype of a different opening for the
+       invitation, kept out of index.html until it has been judged. Tap the scroll
+       to unroll it, tap again to roll it back up. -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Great+Vibes&family=Cinzel:wght@400;600;700&family=Tiro+Devanagari&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Deep jade, so the cover does not repeat the hero's night blue */
+      --ground: #0c3a32;
+      --ground-2: #1a6a59;
+      --gold: #e3c278;
+      --cream: #f7ecd7;
+
+      /* The sheet drives everything: the rods are sized and placed off it.
+         Height is capped first so the rods always clear a short viewport, then
+         the width follows from the page artwork's 2:3 aspect. */
+      --h: min(calc(min(72vw, 340px) * 1.5), 62svh);
+      --w: calc(var(--h) / 1.5);
+      --rw: calc(var(--w) * 1.14);
+      --rh: calc(var(--rw) / 14.06);  /* the rod artwork is 900 x 64 */
+      --unroll: 1.5s cubic-bezier(.22, .72, .24, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      font-family: "Cormorant Garamond", serif;
+      background:
+        radial-gradient(circle at 50% 36%, var(--ground-2), var(--ground) 62%),
+        var(--ground);
+      overflow: hidden;
+    }
+    /* The same watermark the bands inside the invitation use */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("damask.svg") center / 118px 118px repeat;
+      opacity: .055;
+      pointer-events: none;
+    }
+
+    /* Alternate grounds for comparison: scroll.html?bg=plum | maroon | night */
+    body.bg-plum   { --ground: #46152c; --ground-2: #8a3360; }
+    body.bg-maroon { --ground: #3d1016; --ground-2: #7e2330; }
+    body.bg-night  { --ground: #121f3f; --ground-2: #1d3360; }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      height: 100svh;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* A faint palace niche behind the scroll, as on the envelope cover */
+    .niche {
+      position: absolute;
+      left: 50%;
+      bottom: 4.5rem;
+      width: min(92vw, 560px);
+      height: 86%;
+      margin-left: calc(min(92vw, 560px) / -2);
+      opacity: .2;
+      pointer-events: none;
+    }
+    .niche svg { width: 100%; height: 100%; }
+    .niche path { fill: none; stroke: var(--gold); stroke-width: 1; vector-effect: non-scaling-stroke; }
+
+    /* ---------- The scroll ---------- */
+    .scroll {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--w);
+      height: var(--h);
+      margin: calc(var(--h) / -2) 0 0 calc(var(--w) / -2);
+      transform: translateY(calc(var(--h) / 2 - var(--rh) * 0.58));
+      transition: transform var(--unroll);
+    }
+    .scroll.open { transform: translateY(0); }
+
+    .sheet {
+      position: absolute;
+      inset: 0;
+      /* Clipped rather than resized, so the artwork never stretches */
+      clip-path: inset(0 0 100% 0);
+      transition: clip-path var(--unroll);
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, .5));
+    }
+    .scroll.open .sheet { clip-path: inset(0 0 0 0); }
+
+    .sheet-inner {
+      position: absolute;
+      inset: 0;
+      background: #efe0bd url("scroll-page.jpg") center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .3rem;
+      padding: 15% 12%;
+      text-align: center;
+      color: #3a2410;
+    }
+
+    .eyebrow {
+      margin: 0;
+      font-family: "Cinzel", serif;
+      font-size: max(9.5px, calc(var(--w) * .036));
+      font-weight: 700;
+      letter-spacing: .24em;
+      text-indent: .24em;
+      text-transform: uppercase;
+      color: #8a2231;
+    }
+    .shubh {
+      margin: .5rem 0 0;
+      font-family: "Tiro Devanagari", serif;
+      font-size: max(12px, calc(var(--w) * .046));
+      color: #7c1e38;
+    }
+    .names {
+      margin: .2rem 0 0;
+      font-family: "Great Vibes", cursive;
+      font-size: max(26px, calc(var(--w) * .105));
+      font-weight: 400;
+      line-height: 1.15;
+      color: #2f1d0c;
+    }
+    .names span { font-family: "Cinzel", serif; font-size: .42em; color: #9a7217; }
+    .rule { width: 62%; height: 14px; margin: .5rem 0; }
+    .rule path { fill: none; stroke: #9a7217; stroke-width: 1.1; }
+    .date {
+      margin: 0;
+      font-family: "Cinzel", serif;
+      font-size: max(11px, calc(var(--w) * .042));
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-indent: .14em;
+      color: #5a3a16;
+    }
+
+    /* Both rods are the same piece of artwork; the lower one travels. */
+    .rod {
+      position: absolute;
+      left: 50%;
+      width: var(--rw);
+      height: var(--rh);
+      margin-left: calc(var(--rw) / -2);
+      background: url("scroll-rod.png") center / 100% 100% no-repeat;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .45));
+    }
+    .rod--top { top: calc(var(--rh) * -0.55); z-index: 4; }
+    .rod--bot {
+      top: calc(var(--rh) * 0.52);
+      z-index: 2;
+      transition: transform var(--unroll);
+    }
+    /* Travels a rod's width short of the full sheet, so it ends up straddling
+       the paper's bottom edge rather than hanging below it. */
+    .scroll.open .rod--bot { transform: translateY(calc(var(--h) - var(--rh) * 0.7)); }
+    .rod--bot::after {
+      content: "";
+      position: absolute;
+      left: 4.5%;
+      right: 4.5%;
+      top: calc(var(--rh) * -0.22);
+      height: calc(var(--rh) * 1.42);
+      z-index: -1;
+      border-radius: 4px;
+      background: linear-gradient(to bottom,
+        #bda279, #f4e8cc 22%, #e9d7ae 44%, #f2e4c4 58%, #cdb183 84%, #a98f62);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, .45),
+        inset 0 0 0 1px rgba(124, 90, 40, .3);
+      transform-origin: center;
+      transition: transform var(--unroll), opacity var(--unroll);
+    }
+    .scroll.open .rod--bot::after { transform: scaleY(.12); opacity: .5; }
+
+    /* The shadow the paper casts as it comes off the roll */
+    .rod--bot::before {
+      content: "";
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      bottom: 100%;
+      height: calc(var(--rh) * 1.1);
+      background: linear-gradient(to top, rgba(60, 34, 10, .38), transparent);
+      pointer-events: none;
+    }
+
+    /* A tasselled cord hung off the upper rod */
+    .cord {
+      position: absolute;
+      top: calc(var(--rh) * 0.2);
+      right: calc(var(--rw) * -0.085);
+      width: 26px;
+      height: calc(var(--h) * 0.42);
+      z-index: 4;
+      pointer-events: none;
+    }
+    .cord svg { width: 100%; height: 100%; overflow: visible; }
+    .cord .thread { fill: none; stroke: #c9a24a; stroke-width: 2; }
+    .cord .tassel { fill: #8a2231; }
+    .cord .band { fill: #c9a24a; }
+
+    /* ---------- Hint ---------- */
+    .hint {
+      position: absolute;
+      left: 50%;
+      bottom: 2.4rem;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0;
+      font-family: "Cinzel", serif;
+      font-size: .92rem;
+      font-weight: 700;
+      letter-spacing: .24em;
+      text-indent: .24em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .hint::before,
+    .hint::after {
+      content: "";
+      width: clamp(26px, 9vw, 54px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .hint::after { transform: scaleX(-1); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sheet, .rod--bot { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="stage" type="button" id="stage" aria-label="Open the invitation">
+    <div class="niche" aria-hidden="true">
+      <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMax meet">
+        <path d="M0 400 V160 C0 88 42 46 90 26 C126 13 141 6 150 0 C159 6 174 13 210 26 C258 46 300 88 300 160 V400"/>
+        <path d="M14 400 V162 C14 96 54 58 98 39 C131 26 144 18 150 12 C156 18 169 26 202 39 C246 58 286 96 286 162 V400"/>
+      </svg>
+    </div>
+
+    <div class="scroll" id="scroll">
+      <div class="sheet" aria-hidden="true">
+        <div class="sheet-inner">
+          <p class="eyebrow">You are invited</p>
+          <p class="shubh" lang="hi">॥ शुभ विवाह ॥</p>
+          <p class="names">Shivali <span>&amp;</span> Aastik</p>
+          <svg class="rule" viewBox="0 0 160 14" aria-hidden="true" focusable="false">
+            <path d="M0 7 H58 M102 7 H160"/>
+            <path d="M80 1 C87 5 88 8 80 13 C72 8 73 5 80 1 Z"/>
+            <path d="M66 7 C71 3 76 4 79 7 M94 7 C89 3 84 4 81 7"/>
+          </svg>
+          <p class="date">23 January 2027</p>
+        </div>
+      </div>
+
+      <div class="rod rod--top" aria-hidden="true"></div>
+      <div class="rod rod--bot" aria-hidden="true"></div>
+
+      <div class="cord" aria-hidden="true">
+        <svg viewBox="0 0 26 120" preserveAspectRatio="xMidYMin meet">
+          <path class="thread" d="M13 0 C19 16 7 30 13 46 C17 58 11 66 13 76"/>
+          <rect class="band" x="7" y="76" width="12" height="7" rx="2"/>
+          <path class="tassel" d="M8 83 H18 L20 104 C20 110 6 110 6 104 Z"/>
+          <path class="thread" d="M9 104 V116 M13 106 V118 M17 104 V116"/>
+        </svg>
+      </div>
+    </div>
+
+    <p class="hint" id="hint"><span>Tap to open</span></p>
+  </button>
+
+  <script>
+    (() => {
+      // Only a fixed set of grounds is honoured, so nothing from the query
+      // string ever reaches the DOM as a class name.
+      const grounds = ["plum", "maroon", "night"];
+      const bg = new URLSearchParams(location.search).get("bg");
+      if (grounds.includes(bg)) document.body.classList.add("bg-" + bg);
+
+      const stage = document.getElementById("stage");
+      const scroll = document.getElementById("scroll");
+      const hint = document.querySelector("#hint span");
+
+      stage.addEventListener("click", () => {
+        const open = scroll.classList.toggle("open");
+        hint.textContent = open ? "Tap to roll up" : "Tap to open";
+      });
+    })();
+  </script>
+</body>
+</html>

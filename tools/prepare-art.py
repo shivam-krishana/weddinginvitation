@@ -20,13 +20,15 @@ FEATHER = 62
 
 
 def knock_out_white(src_name, out_name, width, crop_top=0.0, crop_bottom=0.0,
-                    colors=0, feather=FEATHER, trim=False):
+                    colors=0, feather=FEATHER, trim=False, floor=0):
     """Turn a white studio background into transparency and save a sized PNG.
 
     crop_top and crop_bottom discard those fractions of empty space; trim crops to
     whatever is left opaque; colors, when set, quantises the result, which
     shrinks flat silhouettes dramatically. A smaller feather keeps near-white
-    detail such as a flame tip, at the cost of a harder cut-out edge.
+    detail such as a flame tip, at the cost of a harder cut-out edge. floor
+    discards pixels barely off white, which is what makes trim able to find the
+    real edge of artwork sitting in a noisy white field.
     """
     img = Image.open(os.path.join(ASSETS, src_name)).convert("RGB")
     if crop_top or crop_bottom:
@@ -40,7 +42,12 @@ def knock_out_white(src_name, out_name, width, crop_top=0.0, crop_bottom=0.0,
         for x in range(img.size[0]):
             r, g, b = pixels[x, y]
             distance = 255 - min(r, g, b)
-            alpha = 255 if distance >= feather else int(distance * 255 / feather)
+            if distance <= floor:
+                alpha = 0
+            elif distance >= feather:
+                alpha = 255
+            else:
+                alpha = int(distance * 255 / feather)
             out_pixels[x, y] = (r, g, b, alpha)
 
     if trim:
@@ -73,6 +80,11 @@ knock_out_white("art-toran-painted.png", "garland.png", 1100,
 
 # The illuminated page the opening card is printed on
 to_jpeg("art-card.png", "card.jpg", 820, quality=80)
+
+# Prototype: the scroll cover on scroll.html
+knock_out_white("art-rod.png", "scroll-rod.png", 900, feather=40, trim=True,
+                floor=14, colors=200)
+to_jpeg("art-scroll-page.png", "scroll-page.jpg", 700, quality=80)
 
 # Surfaces the envelope is cut from, plus the corner piece printed on its front
 to_jpeg("art-paper.png", "env-paper.jpg", 640, quality=78)
