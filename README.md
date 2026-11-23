@@ -7,7 +7,7 @@ dependencies. Open `index.html` in a browser to preview.
 
 | File | What it holds |
 | --- | --- |
-| `index.html` | All visible text: cover, invitation wording, the five events, RSVP, footer |
+| `index.html` | All visible text: cover, invitation wording, the events, RSVP, footer |
 | `style.css` | Ivory-and-gold theme, layout, the opening-seal animation, scroll reveals |
 | `script.js` | Map links, countdown, personalised greeting, opening seal |
 
