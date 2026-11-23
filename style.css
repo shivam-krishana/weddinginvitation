@@ -63,19 +63,6 @@ body {
   text-transform: uppercase;
 }
 
-.monogram {
-  width: 150px; height: 150px;
-  border-radius: 50%;
-  border: 2px solid var(--gold);
-  box-shadow: 0 0 0 6px var(--paper), 0 0 0 7px var(--gold-soft);
-  display: flex; align-items: center; justify-content: center; gap: .1rem;
-  font-family: "Great Vibes", cursive;
-  font-size: 3.4rem;
-  color: var(--ink);
-  margin: .6rem 0;
-}
-.monogram i { font-size: 1.8rem; color: var(--gold); font-style: normal; }
-
 /* Names stacked on one centre line: Shivali / — weds — / Aastik */
 .names { display: flex; flex-direction: column; align-items: center; line-height: 1.05; margin: .3rem 0; }
 .names span { font-size: clamp(3.2rem, 13vw, 5rem); }
@@ -188,5 +175,4 @@ body.locked { overflow: hidden; }
 
 @media (max-width: 480px) {
   body { font-size: 1.1rem; }
-  .monogram { width: 120px; height: 120px; font-size: 2.8rem; }
 }
