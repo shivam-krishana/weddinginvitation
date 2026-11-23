@@ -272,6 +272,15 @@ setInterval(tick, 1000);
   const params = new URLSearchParams(location.search);
   if (params.get("intro") === "0" || sessionStorage.getItem("opened-shivali")) return;
 
+  document.documentElement.classList.add("intro-waiting");
+
+  const preloadImage = (src) => new Promise((resolve) => {
+    const img = new Image();
+    img.onload = resolve;
+    img.onerror = resolve;
+    img.src = src;
+  });
+
   const grounds = { jade: "intro--jade", maroon: "intro--maroon", night: "intro--night" };
   const bg = params.get("bg");
   const groundClass = Object.prototype.hasOwnProperty.call(grounds, bg) ? grounds[bg] : "";
@@ -326,8 +335,6 @@ setInterval(tick, 1000);
   el.append(niche, scroll, hint);
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   window.scrollTo(0, 0);
-  document.body.classList.add("locked");
-  document.body.append(el);
 
   let opening = false;
   const open = () => {
@@ -345,7 +352,19 @@ setInterval(tick, 1000);
   };
 
   el.addEventListener("click", open);
-  el.focus();
+
+  Promise.all([
+    preloadImage("scroll-page.jpg"),
+    preloadImage("scroll-rod.png"),
+  ]).then(() => {
+    document.body.classList.add("locked");
+    document.body.append(el);
+    requestAnimationFrame(() => {
+      el.classList.add("ready");
+      document.documentElement.classList.remove("intro-waiting");
+      el.focus();
+    });
+  });
 })();
 
 // Scroll reveal, staggered within each band

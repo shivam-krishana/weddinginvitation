@@ -15,7 +15,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Cinzel:wght@400;600;700&family=Tiro+Devanagari:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="preload" as="image" href="scroll-page.jpg">
+  <link rel="preload" as="image" href="scroll-rod.png">
+  <link rel="stylesheet" href="style.css?v=8">
+  <!-- Closed scroll: inner copy stays hidden until unroll (Safari clip-path quirks). -->
+  <style>
+    html.intro-waiting body { overflow: hidden; }
+    html.intro-waiting .hero,
+    html.intro-waiting main { visibility: hidden; }
+    .intro-scroll:not(.open) .scroll-sheet-inner { visibility: hidden; }
+  </style>
 </head>
 <body>
 
@@ -207,6 +216,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>

@@ -639,17 +639,22 @@ body.locked { overflow: hidden; }
 
 .intro {
   position: fixed; inset: 0; z-index: 100;
+  display: block;
+  width: 100%;
+  height: 100%;
   border: 0; cursor: pointer; font: inherit; color: var(--cream);
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
+  opacity: 0;
+  transition: opacity .5s ease, transform .6s ease;
   /* Plum aubergine — distinct from the hero's night blue */
   --ground: #46152c;
   --ground-2: #8a3360;
   background:
     radial-gradient(circle at 50% 36%, var(--ground-2), var(--ground) 62%),
     var(--ground);
-  transition: opacity .6s ease, transform .6s ease;
 }
+.intro.ready { opacity: 1; }
 .intro.intro--jade   { --ground: #0c3a32; --ground-2: #1a6a59; }
 .intro.intro--maroon { --ground: #3d1016; --ground-2: #7e2330; }
 .intro.intro--night  { --ground: #121f3f; --ground-2: #1d3360; }
@@ -663,7 +668,7 @@ body.locked { overflow: hidden; }
   opacity: .055;
   pointer-events: none;
 }
-.intro.done { opacity: 0; transform: scale(1.05); pointer-events: none; }
+.intro.done { opacity: 0; transform: scale(1.05); pointer-events: none; transition: opacity .6s ease, transform .6s ease; }
 .intro::after {
   content: "";
   position: absolute;
@@ -734,17 +739,26 @@ body.locked { overflow: hidden; }
   margin: calc(var(--scroll-h) / -2) 0 0 calc(var(--scroll-w) / -2);
   transform: translateY(calc(var(--scroll-h) / 2 - var(--scroll-rh) * 0.58));
   transition: transform var(--scroll-unroll);
+  contain: layout style paint;
 }
 .intro-scroll.open { transform: translateY(0); }
 
 .intro-scroll .scroll-sheet {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+  -webkit-clip-path: inset(0 0 100% 0);
   clip-path: inset(0 0 100% 0);
-  transition: clip-path var(--scroll-unroll);
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, .5));
+  transition: clip-path var(--scroll-unroll), -webkit-clip-path var(--scroll-unroll);
 }
-.intro-scroll.open .scroll-sheet { clip-path: inset(0 0 0 0); }
+.intro-scroll.open .scroll-sheet {
+  -webkit-clip-path: inset(0 0 0 0);
+  clip-path: inset(0 0 0 0);
+}
+.intro-scroll.open .scroll-sheet-inner {
+  visibility: visible;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, .5);
+}
 
 .scroll-sheet-inner {
   position: absolute;
