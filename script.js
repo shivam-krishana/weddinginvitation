@@ -14,18 +14,6 @@ document.querySelectorAll("[data-wa]").forEach((a) => {
   a.rel = "noopener";
 });
 
-// Personalised greeting from the link: ?to=Amarjeet Singh&city=Delhi&sub=W/F
-// Values are written with textContent, so nothing in the URL can inject markup.
-const params = new URLSearchParams(location.search);
-// Capitalise the first letter of each word; the rest is left exactly as typed (so "MM Qaji" stays intact)
-const cap = (t) => t.replace(/(^|\s)(\p{L})/gu, (_, sp, ch) => sp + ch.toUpperCase());
-const to = cap((params.get("to") || "").trim().slice(0, 60));
-const city = cap((params.get("city") || "").trim().slice(0, 40));
-// Second line under the name; "W/F" (or nothing) means "With Family"
-const rawSub = (params.get("sub") || "").trim().slice(0, 40);
-const sub = !rawSub || rawSub.toUpperCase() === "W/F" ? "With Family" : rawSub;
-if (to) document.title = `${to} · Shivali weds Aastik`;
-
 // Countdown to the wedding day
 const target = new Date(WEDDING_START).getTime();
 const box = document.getElementById("countdown");
@@ -49,6 +37,7 @@ setInterval(tick, 1000);
 
 // Opening seal: guests tap to open. Skipped on refresh within a session, or with ?intro=0
 (() => {
+  const params = new URLSearchParams(location.search);
   if (params.get("intro") === "0" || sessionStorage.getItem("opened-shivali")) return;
 
   const el = document.createElement("button");
@@ -65,16 +54,6 @@ setInterval(tick, 1000);
   seal.textContent = "S & A";
 
   el.append(eyebrow, seal);
-
-  if (to) {
-    const forLine = document.createElement("p");
-    forLine.className = "intro-for";
-    forLine.textContent = "To - " + (city ? `${to}, ${city}` : to);
-    const subLine = document.createElement("p");
-    subLine.className = "intro-sub";
-    subLine.textContent = sub;
-    el.append(forLine, subLine);
-  }
 
   const tap = document.createElement("p");
   tap.className = "intro-tap";
