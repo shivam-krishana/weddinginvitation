@@ -34,8 +34,24 @@ def _blush_bg() -> Image.Image:
     return img
 
 
-def _center(draw: ImageDraw.ImageDraw, text: str, y: int, font, fill: tuple[int, int, int]) -> None:
-    draw.text((W // 2, y), text, font=font, fill=fill, anchor="mm")
+def _line_h(draw: ImageDraw.ImageDraw, text: str, font) -> int:
+    box = draw.textbbox((0, 0), text, font=font, anchor="mt")
+    return box[3] - box[1]
+
+
+def _stack(
+    draw: ImageDraw.ImageDraw,
+    cx: int,
+    top_y: int,
+    lines: list[tuple[str, ImageFont.FreeTypeFont, tuple[int, int, int]]],
+    gaps: list[int],
+) -> int:
+    """Draw lines top-to-bottom; gaps[i] is space after lines[i]. Returns bottom y."""
+    y = top_y
+    for i, (text, font, fill) in enumerate(lines):
+        draw.text((cx, y), text, font=font, fill=fill, anchor="mt")
+        y += _line_h(draw, text, font) + gaps[i]
+    return y
 
 
 def _rule(draw: ImageDraw.ImageDraw, y: int, cx: int, half: int) -> None:
@@ -92,11 +108,11 @@ def main() -> None:
     draw = ImageDraw.Draw(bg)
 
     scale = card_w / 820.0
-    font_eye = ImageFont.truetype(cinzel, max(22, int(30 * scale)))
-    font_hi = _devanagari_font(max(26, int(34 * scale)))
-    font_names = ImageFont.truetype(vibes, max(52, int(88 * scale)))
-    font_amp = ImageFont.truetype(cinzel, max(18, int(26 * scale)))
-    font_date = ImageFont.truetype(cinzel, max(22, int(32 * scale)))
+    font_eye = ImageFont.truetype(cinzel, max(22, int(28 * scale)))
+    font_hi = _devanagari_font(max(24, int(30 * scale)))
+    font_names = ImageFont.truetype(vibes, max(48, int(72 * scale)))
+    font_amp = ImageFont.truetype(cinzel, max(16, int(22 * scale)))
+    font_date = ImageFont.truetype(cinzel, max(22, int(30 * scale)))
 
     maroon = (138, 34, 49)
     hi = (124, 30, 56)
@@ -104,21 +120,42 @@ def main() -> None:
     gold = (154, 113, 23)
     date = (90, 58, 22)
 
-    mid_y = card_y + int(card_h * 0.44)
     cx = W // 2
+    inner_top = card_y + int(card_h * 0.22)
+    inner_bot = card_y + int(card_h * 0.88)
 
-    _center(draw, "You are invited", mid_y - int(70 * scale), font_eye, maroon)
-    _center(draw, "॥ शुभ विवाह ॥", mid_y - int(22 * scale), font_hi, hi)
+    lines = [
+        ("You are invited", font_eye, maroon),
+        ("॥ शुभ विवाह ॥", font_hi, hi),
+        ("Shivali", font_names, ink),
+        ("&", font_amp, gold),
+        ("Aastik", font_names, ink),
+    ]
+    gaps = [
+        int(14 * scale),
+        int(22 * scale),
+        int(6 * scale),
+        int(6 * scale),
+        int(16 * scale),
+    ]
+    block_h = sum(_line_h(draw, t, f) for t, f, _ in lines) + sum(gaps)
 
-    names_y = mid_y + int(42 * scale)
-    _center(draw, "Shivali", names_y, font_names, ink)
-    weds_y = names_y + int(54 * scale)
-    _center(draw, "&", weds_y, font_amp, gold)
-    _center(draw, "Aastik", names_y + int(92 * scale), font_names, ink)
+    rule_gap = int(10 * scale)
+    date_h = _line_h(draw, "23 January 2027", font_date)
+    block_h += rule_gap + 4 + date_h
 
-    rule_y = names_y + int(128 * scale)
-    _rule(draw, rule_y, cx, int(120 * scale))
-    _center(draw, "23 January 2027", rule_y + int(44 * scale), font_date, date)
+    start_y = inner_top + max(0, (inner_bot - inner_top - block_h) // 2)
+    bottom = _stack(draw, cx, start_y, lines, gaps)
+
+    rule_y = bottom + rule_gap
+    _rule(draw, rule_y, cx, int(110 * scale))
+    draw.text(
+        (cx, rule_y + int(18 * scale)),
+        "23 January 2027",
+        font=font_date,
+        fill=date,
+        anchor="mt",
+    )
 
     bg.save(out_path, "JPEG", quality=90, optimize=True)
     print("og.jpg", bg.size, os.path.getsize(out_path) // 1024, "KB")
