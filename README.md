@@ -67,11 +67,11 @@ moment for guests in any timezone.
 ## Opening scroll
 
 Append `?intro=0` to skip the tap-to-open screen. Otherwise a royal scroll is shown once per
-browser session on a deep jade ground (so it does not repeat the hero’s night blue), under the
+browser session on a plum aubergine ground (distinct from the hero’s night blue), under the
 same damask watermark and palace niche as the bands inside. Tap once to unroll an illuminated
 parchment page (`scroll-page.jpg`) between two rosewood rods (`scroll-rod.png`); the overlay
-fades into the invitation after the sheet has finished unrolling. Optional grounds for testing:
-`?bg=plum`, `?bg=maroon`, or `?bg=night`. The toggle-able demo lives at `scroll.html`.
+fades into the invitation after the sheet has finished unrolling. Optional grounds:
+`?bg=jade`, `?bg=maroon`, or `?bg=night`. The toggle-able demo lives at `scroll.html`.
 
 ## Motion
 

@@ -14,9 +14,9 @@
 
   <style>
     :root {
-      /* Deep jade, so the cover does not repeat the hero's night blue */
-      --ground: #0c3a32;
-      --ground-2: #1a6a59;
+      /* Plum aubergine — matches the live invitation cover */
+      --ground: #46152c;
+      --ground-2: #8a3360;
       --gold: #e3c278;
       --cream: #f7ecd7;
 
@@ -53,8 +53,8 @@
       pointer-events: none;
     }
 
-    /* Alternate grounds for comparison: scroll.html?bg=plum | maroon | night */
-    body.bg-plum   { --ground: #46152c; --ground-2: #8a3360; }
+    /* Alternate grounds: scroll.html?bg=jade | maroon | night */
+    body.bg-jade   { --ground: #0c3a32; --ground-2: #1a6a59; }
     body.bg-maroon { --ground: #3d1016; --ground-2: #7e2330; }
     body.bg-night  { --ground: #121f3f; --ground-2: #1d3360; }
 
@@ -298,7 +298,7 @@
     (() => {
       // Only a fixed set of grounds is honoured, so nothing from the query
       // string ever reaches the DOM as a class name.
-      const grounds = ["plum", "maroon", "night"];
+      const grounds = ["jade", "maroon", "night"];
       const bg = new URLSearchParams(location.search).get("bg");
       if (grounds.includes(bg)) document.body.classList.add("bg-" + bg);
 

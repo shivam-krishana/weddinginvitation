@@ -272,7 +272,7 @@ setInterval(tick, 1000);
   const params = new URLSearchParams(location.search);
   if (params.get("intro") === "0" || sessionStorage.getItem("opened-shivali")) return;
 
-  const grounds = { plum: "intro--plum", maroon: "intro--maroon", night: "intro--night" };
+  const grounds = { jade: "intro--jade", maroon: "intro--maroon", night: "intro--night" };
   const bg = params.get("bg");
   const groundClass = Object.prototype.hasOwnProperty.call(grounds, bg) ? grounds[bg] : "";
 

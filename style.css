@@ -642,15 +642,15 @@ body.locked { overflow: hidden; }
   border: 0; cursor: pointer; font: inherit; color: var(--cream);
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
-  /* Deep jade so the cover does not repeat the hero's night blue */
-  --ground: #0c3a32;
-  --ground-2: #1a6a59;
+  /* Plum aubergine — distinct from the hero's night blue */
+  --ground: #46152c;
+  --ground-2: #8a3360;
   background:
     radial-gradient(circle at 50% 36%, var(--ground-2), var(--ground) 62%),
     var(--ground);
   transition: opacity .6s ease, transform .6s ease;
 }
-.intro.intro--plum   { --ground: #46152c; --ground-2: #8a3360; }
+.intro.intro--jade   { --ground: #0c3a32; --ground-2: #1a6a59; }
 .intro.intro--maroon { --ground: #3d1016; --ground-2: #7e2330; }
 .intro.intro--night  { --ground: #121f3f; --ground-2: #1d3360; }
 /* The same block-print watermark the bands carry, so the cover belongs to them */
@@ -714,7 +714,6 @@ body.locked { overflow: hidden; }
   text-indent: .24em;
   text-transform: uppercase;
   color: var(--gold);
-  animation: bob 2.2s ease-in-out infinite;
 }
 .intro-hint::before,
 .intro-hint::after {
