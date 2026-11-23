@@ -35,7 +35,7 @@ function tick() {
 tick();
 setInterval(tick, 1000);
 
-// Opening envelope: tap to unveil. Skipped on refresh within a session, or with ?intro=0
+// Envelope open animation (inspired by Josh Nichols / CodePen). Skipped with ?intro=0.
 (() => {
   const params = new URLSearchParams(location.search);
   if (params.get("intro") === "0" || sessionStorage.getItem("opened-shivali")) return;
@@ -45,65 +45,59 @@ setInterval(tick, 1000);
   el.className = "intro";
   el.setAttribute("aria-label", "Open the invitation");
 
-  const glow = document.createElement("div");
-  glow.className = "intro-glow";
-  glow.setAttribute("aria-hidden", "true");
-
-  const mandala = document.createElement("div");
-  mandala.className = "intro-mandala";
-  mandala.setAttribute("aria-hidden", "true");
-  mandala.innerHTML =
-    '<svg viewBox="0 0 240 240" class="intro-mandala-svg" aria-hidden="true">' +
-    '<circle cx="120" cy="120" r="108" fill="none" stroke="currentColor" stroke-width="1"/>' +
-    '<circle cx="120" cy="120" r="88" fill="none" stroke="currentColor" stroke-width=".8" stroke-dasharray="4 6"/>' +
-    '<path d="M120 20v28M120 192v28M20 120h28M192 120h28" stroke="currentColor" stroke-width="1"/>' +
-    '<path d="M120 48c-14 10-14 34 0 44 14-10 14-34 0-44zm0 100c-14 10-14 34 0 44 14-10 14-34 0-44zM48 120c10-14 34-14 44 0-10 14-34 14-44 0zm100 0c10-14 34-14 44 0-10 14-34 14-44 0z" fill="none" stroke="currentColor" stroke-width=".9"/></svg>';
+  const wrapper = document.createElement("div");
+  wrapper.className = "envlope-wrapper";
 
   const envelope = document.createElement("div");
-  envelope.className = "intro-envelope";
+  envelope.id = "envelope";
+  envelope.className = "close";
 
   const flap = document.createElement("div");
-  flap.className = "intro-flap";
-  flap.setAttribute("aria-hidden", "true");
+  flap.className = "front flap";
 
-  const panel = document.createElement("div");
-  panel.className = "intro-panel";
+  const pocket = document.createElement("div");
+  pocket.className = "front pocket";
 
-  const eyebrow = document.createElement("p");
-  eyebrow.className = "intro-eyebrow";
-  eyebrow.textContent = "You are invited";
+  const letter = document.createElement("div");
+  letter.className = "letter";
+  letter.innerHTML =
+    '<p class="letter-eyebrow">You are invited</p>' +
+    '<p class="letter-shubh" lang="hi">॥ शुभ विवाह ॥</p>' +
+    '<p class="letter-names">Shivali <span>&amp;</span> Aastik</p>' +
+    '<p class="letter-date">23 January 2027</p>';
 
-  const shubh = document.createElement("p");
-  shubh.className = "intro-shubh";
-  shubh.lang = "hi";
-  shubh.textContent = "॥ शुभ विवाह ॥";
+  const hearts = document.createElement("div");
+  hearts.className = "hearts";
+  hearts.setAttribute("aria-hidden", "true");
+  hearts.innerHTML = '<div class="heart a1"></div><div class="heart a2"></div><div class="heart a3"></div>';
 
-  const sealRing = document.createElement("div");
-  sealRing.className = "seal-ring";
+  envelope.append(flap, pocket, letter, hearts);
+  wrapper.append(envelope);
 
-  const seal = document.createElement("div");
-  seal.className = "seal";
-  seal.textContent = "S & A";
+  const hint = document.createElement("p");
+  hint.className = "intro-hint";
+  hint.textContent = "Tap to open";
 
-  sealRing.append(seal);
-
-  const tap = document.createElement("p");
-  tap.className = "intro-tap";
-  tap.textContent = "Tap to unveil";
-
-  panel.append(eyebrow, shubh, sealRing, tap);
-  envelope.append(flap, panel);
-  el.append(glow, mandala, envelope);
-
+  el.append(wrapper, hint);
   document.body.classList.add("locked");
   document.body.append(el);
 
-  el.addEventListener("click", () => {
+  let opening = false;
+  const open = () => {
+    if (opening) return;
+    opening = true;
     sessionStorage.setItem("opened-shivali", "1");
-    el.classList.add("open");
-    document.body.classList.remove("locked");
-    setTimeout(() => el.remove(), 1900);
-  });
+    envelope.classList.remove("close");
+    envelope.classList.add("open");
+    hint.textContent = "";
+    window.setTimeout(() => {
+      el.classList.add("done");
+      document.body.classList.remove("locked");
+      window.setTimeout(() => el.remove(), 550);
+    }, 2400);
+  };
+
+  el.addEventListener("click", open);
   el.focus();
 })();
 
