@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Shivali and Aastik">
+  <defs>
+  <radialGradient id="g" cx="32%" cy="28%" r="72%">
+      <stop offset="0" stop-color="#e3c777"/>
+      <stop offset="1" stop-color="#a8801f"/>
+    </radialGradient>
+  </defs>
+  <circle cx="16" cy="16" r="16" fill="url(#g)"/>
+  <circle cx="16" cy="16" r="13.5" fill="none" stroke="#fff8e4" stroke-opacity=".45" stroke-width="1"/>
+  <text x="16" y="19" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="9.5" font-style="italic" fill="#fff8e4">S&amp;A</text>
+</svg>
