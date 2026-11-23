@@ -277,6 +277,17 @@ setInterval(tick, 1000);
   el.className = "intro";
   el.setAttribute("aria-label", "Open the invitation");
 
+  const niche = document.createElement("div");
+  niche.className = "intro-niche";
+  niche.setAttribute("aria-hidden", "true");
+  niche.innerHTML =
+    '<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMax meet">' +
+      '<path d="M0 400 V160 C0 88 42 46 90 26 C126 13 141 6 150 0' +
+        ' C159 6 174 13 210 26 C258 46 300 88 300 160 V400"/>' +
+      '<path d="M14 400 V162 C14 96 54 58 98 39 C131 26 144 18 150 12' +
+        ' C156 18 169 26 202 39 C246 58 286 96 286 162 V400"/>' +
+    '</svg>';
+
   const wrapper = document.createElement("div");
   wrapper.className = "envlope-wrapper";
 
@@ -287,15 +298,17 @@ setInterval(tick, 1000);
   const letter = document.createElement("div");
   letter.className = "letter";
   letter.innerHTML =
-    '<p class="letter-eyebrow">You are invited</p>' +
-    '<p class="letter-shubh" lang="hi">॥ शुभ विवाह ॥</p>' +
-    '<p class="letter-names">Shivali <span>&amp;</span> Aastik</p>' +
-    '<svg class="letter-rule" viewBox="0 0 160 14" aria-hidden="true" focusable="false">' +
-      '<path d="M0 7 H58 M102 7 H160"/>' +
-      '<path d="M80 1 C87 5 88 8 80 13 C72 8 73 5 80 1 Z"/>' +
-      '<path d="M66 7 C71 3 76 4 79 7 M94 7 C89 3 84 4 81 7"/>' +
-    '</svg>' +
-    '<p class="letter-date">23 January 2027</p>';
+    '<div class="letter-page">' +
+      '<p class="letter-eyebrow">You are invited</p>' +
+      '<p class="letter-shubh" lang="hi">॥ शुभ विवाह ॥</p>' +
+      '<p class="letter-names">Shivali <span>&amp;</span> Aastik</p>' +
+      '<svg class="letter-rule" viewBox="0 0 160 14" aria-hidden="true" focusable="false">' +
+        '<path d="M0 7 H58 M102 7 H160"/>' +
+        '<path d="M80 1 C87 5 88 8 80 13 C72 8 73 5 80 1 Z"/>' +
+        '<path d="M66 7 C71 3 76 4 79 7 M94 7 C89 3 84 4 81 7"/>' +
+      '</svg>' +
+      '<p class="letter-date">23 January 2027</p>' +
+    '</div>';
 
   // A patterned liner sits behind everything, so the gaps between the flap's
   // curved edge and the pocket mouth show lining paper rather than the card.
@@ -305,45 +318,36 @@ setInterval(tick, 1000);
 
   const pocket = document.createElement("div");
   pocket.className = "front pocket";
+  // The envelope is cut from two painted sheets: block-printed cream paper on
+  // the outside, crimson damask inside. Both patterns are declared here and
+  // referenced by the flap, so the print runs unbroken across the fold.
   pocket.innerHTML =
     '<svg viewBox="0 0 300 198" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
       '<defs>' +
-        '<linearGradient id="pocketPaper" x1="0" y1="0" x2="0" y2="1">' +
-          '<stop offset="0" stop-color="#f6e9ce"/>' +
-          '<stop offset=".6" stop-color="#efdfbd"/>' +
-          '<stop offset="1" stop-color="#e3d0a8"/>' +
-        '</linearGradient>' +
-        '<linearGradient id="pocketSheen" x1="0" y1="0" x2="1" y2="1">' +
-          '<stop offset="0" stop-color="#fff" stop-opacity=".35"/>' +
-          '<stop offset=".5" stop-color="#fff" stop-opacity="0"/>' +
-          '<stop offset="1" stop-color="#fff" stop-opacity=".2"/>' +
-        '</linearGradient>' +
-        // A block-printed buti laid over the paper, as on the bands inside
-        '<pattern id="buti" width="24" height="24" patternUnits="userSpaceOnUse">' +
-          '<path d="M12 4 C16 9 16 13 12 18 C8 13 8 9 12 4 Z" fill="none" ' +
-            'stroke="#a9801f" stroke-opacity=".22" stroke-width="1"/>' +
-          '<circle cx="12" cy="21" r="1" fill="#a9801f" fill-opacity=".2"/>' +
-          '<path d="M3 12 H7 M17 12 H21" stroke="#a9801f" stroke-opacity=".14" stroke-width="1"/>' +
+        '<pattern id="envPaper" width="300" height="198" patternUnits="userSpaceOnUse">' +
+          '<image href="env-paper.jpg" width="300" height="198" preserveAspectRatio="xMidYMid slice"/>' +
         '</pattern>' +
-        '<clipPath id="pocketClip">' +
-          '<path d="M0 16 Q150 140 300 16 L300 198 L0 198 Z"/>' +
-        '</clipPath>' +
+        '<pattern id="envLining" width="300" height="198" patternUnits="userSpaceOnUse">' +
+          '<image href="env-lining.jpg" width="300" height="198" preserveAspectRatio="xMidYMid slice"/>' +
+        '</pattern>' +
+        '<linearGradient id="pocketSheen" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0" stop-color="#fff" stop-opacity=".3"/>' +
+          '<stop offset=".5" stop-color="#fff" stop-opacity="0"/>' +
+          '<stop offset="1" stop-color="#fff" stop-opacity=".18"/>' +
+        '</linearGradient>' +
       '</defs>' +
-      '<path d="M0 16 Q150 140 300 16 L300 198 L0 198 Z" fill="url(#pocketPaper)"/>' +
-      '<rect width="300" height="198" fill="url(#buti)" clip-path="url(#pocketClip)"/>' +
+      '<path d="M0 16 Q150 140 300 16 L300 198 L0 198 Z" fill="url(#envPaper)"/>' +
       '<path d="M0 16 Q150 140 300 16 L300 198 L0 198 Z" fill="url(#pocketSheen)"/>' +
       '<path class="foil" d="M0 16 Q150 140 300 16"/>' +
-      '<path class="foil foil--thin" d="M11 31 Q150 147 289 31 L289 187 L11 187 Z"/>' +
-      '<path class="foil foil--thin" d="M17 37 Q150 139 283 37 L283 181 L17 181 Z"/>' +
-      '<g class="foil" transform="translate(150 150)">' +
+      '<path class="foil foil--thin" d="M13 33 Q150 145 287 33 L287 185 L13 185 Z"/>' +
+      // An illuminated corner piece at each foot of the frame, mirrored
+      '<image href="env-corner.png" width="74" height="74" transform="translate(16 182) scale(1 -1)"/>' +
+      '<image href="env-corner.png" width="74" height="74" transform="translate(284 182) scale(-1 -1)"/>' +
+      '<g class="foil" transform="translate(150 148)">' +
         '<path d="M0 -19 C12 -9 15 1 0 17 C-15 1 -12 -9 0 -19 Z"/>' +
         '<path class="foil--thin" d="M0 -10 C6 -4 7 0 0 8 C-7 0 -6 -4 0 -10 Z"/>' +
         '<path d="M-28 -3 C-17 -11 -7 -9 0 1"/>' +
         '<path d="M28 -3 C17 -11 7 -9 0 1"/>' +
-        '<path class="foil--thin" d="M-40 6 H-74"/>' +
-        '<path class="foil--thin" d="M40 6 H74"/>' +
-        '<circle class="foil--thin" cx="-80" cy="6" r="2"/>' +
-        '<circle class="foil--thin" cx="80" cy="6" r="2"/>' +
       '</g>' +
     '</svg>';
 
@@ -356,16 +360,8 @@ setInterval(tick, 1000);
   flap.innerHTML =
     '<div class="flap-face">' +
       '<svg viewBox="0 0 300 118" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
-        '<defs>' +
-          '<linearGradient id="flapPaper" x1="0" y1="0" x2="0" y2="1">' +
-            '<stop offset="0" stop-color="#f9eed8"/>' +
-            '<stop offset=".55" stop-color="#f2e3c3"/>' +
-            '<stop offset="1" stop-color="#e8d5ac"/>' +
-          '</linearGradient>' +
-        '</defs>' +
-        '<clipPath id="flapClip"><path d="' + flapShape + '"/></clipPath>' +
-        '<path d="' + flapShape + '" fill="url(#flapPaper)"/>' +
-        '<rect width="300" height="118" fill="url(#buti)" clip-path="url(#flapClip)"/>' +
+        '<path d="' + flapShape + '" fill="url(#envPaper)"/>' +
+        '<path d="' + flapShape + '" fill="url(#pocketSheen)" opacity=".6"/>' +
         '<path class="foil" d="M0 0 C18 46 76 84 150 118 C224 84 282 46 300 0"/>' +
         '<path class="foil foil--thin" d="M12 2 C29 43 83 78 150 106 C217 78 271 43 288 2"/>' +
         '<path class="foil foil--thin" d="M20 2 C36 40 88 73 150 99 C212 73 264 40 280 2"/>' +
@@ -379,15 +375,25 @@ setInterval(tick, 1000);
     '</div>' +
     '<div class="flap-face flap-face--back">' +
       '<svg viewBox="0 0 300 118" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
-        '<path d="' + flapShape + '" fill="#8d2340"/>' +
-        '<path d="' + flapShape + '" fill="url(#pocketSheen)" opacity=".5"/>' +
+        '<path d="' + flapShape + '" fill="url(#envLining)"/>' +
+        '<path d="' + flapShape + '" fill="url(#pocketSheen)" opacity=".35"/>' +
       '</svg>' +
     '</div>';
 
   const wax = document.createElement("div");
   wax.className = "wax";
   wax.setAttribute("aria-hidden", "true");
-  wax.textContent = "S&A";
+  // A pressed lotus, cut as relief: a dark impression under a lit highlight
+  wax.innerHTML =
+    '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">' +
+      '<g class="wax-relief">' +
+        '<path d="M24 9 C31 17 31 24 24 32 C17 24 17 17 24 9 Z"/>' +
+        '<path d="M24 15 C28 20 28 24 24 28 C20 24 20 20 24 15 Z"/>' +
+        '<path d="M9 24 C15 17 20 18 24 24 C20 30 15 31 9 24 Z"/>' +
+        '<path d="M39 24 C33 17 28 18 24 24 C28 30 33 31 39 24 Z"/>' +
+        '<circle cx="24" cy="38" r="2"/>' +
+      '</g>' +
+    '</svg>';
 
   envelope.append(letter, liner, pocket, flap, wax);
   wrapper.append(envelope);
@@ -396,7 +402,7 @@ setInterval(tick, 1000);
   hint.className = "intro-hint";
   hint.innerHTML = "<span>Tap to open</span>";
 
-  el.append(wrapper, hint);
+  el.append(niche, wrapper, hint);
   // A reload can restore the old scroll position behind the locked overlay,
   // which would drop the reader halfway down the page once it closes.
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -412,7 +418,6 @@ setInterval(tick, 1000);
     envelope.classList.remove("close");
     envelope.classList.add("open");
     el.classList.add("opening");
-    hint.innerHTML = "";
     // The card settles at about 1.6s; hold it long enough to read, then go.
     window.setTimeout(() => {
       el.classList.add("done");

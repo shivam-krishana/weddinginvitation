@@ -633,8 +633,29 @@ body.locked { overflow: hidden; }
   animation: haloBreathe 5s ease-in-out infinite;
   pointer-events: none;
 }
-/* Nothing else moves while the envelope opens */
+/* Nothing else moves or competes while the envelope opens */
 .intro.opening::after { animation-play-state: paused; }
+.intro.opening .intro-hint { opacity: 0; animation: none; transition: opacity .4s ease; }
+
+.intro-niche {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(96vw, 620px);
+  height: min(88%, 720px);
+  margin-left: calc(min(96vw, 620px) / -2);
+  z-index: 1;
+  pointer-events: none;
+  opacity: .22;
+}
+.intro-niche svg { width: 100%; height: 100%; }
+.intro-niche path {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.intro-niche path + path { stroke-opacity: .5; }
 
 .intro-hint {
   position: relative;
@@ -727,26 +748,21 @@ body.locked { overflow: hidden; }
   inset: 0;
   z-index: 2;
   border-radius: 10px;
-  background-color: var(--env-liner);
-  background-image: url("damask.svg");
-  background-size: 54px 54px;
+  background: var(--env-liner) url("env-lining.jpg") center / cover no-repeat;
   box-shadow: inset 0 12px 26px rgba(0, 0, 0, .35);
 }
 
 #envelope .wax {
   position: absolute;
-  top: calc(var(--env-height) * 0.596 - 26px);
+  top: calc(var(--env-height) * 0.596 - 29px);
   left: 50%;
-  width: 52px;
-  height: 52px;
-  margin-left: -26px;
+  width: 58px;
+  height: 58px;
+  margin-left: -29px;
   border-radius: 50%;
   z-index: 6;
   display: grid;
   place-items: center;
-  font-family: "Great Vibes", cursive;
-  font-size: 1.1rem;
-  color: #ffe9c6;
   background: radial-gradient(circle at 34% 30%, #a62a48, #6f172f 78%);
   box-shadow:
     0 6px 16px rgba(0, 0, 0, .55),
@@ -756,6 +772,15 @@ body.locked { overflow: hidden; }
   transition: transform .4s cubic-bezier(.3, 0, .2, 1), opacity .4s ease;
   will-change: transform, opacity;
 }
+#envelope .wax svg { width: 74%; height: 74%; }
+/* Relief: a dark impression with a lit edge a hair above it */
+.wax-relief {
+  fill: none;
+  stroke: #4e0f22;
+  stroke-opacity: .85;
+  stroke-width: 1.6;
+  filter: drop-shadow(0 -1px 0 rgba(255, 216, 170, .4));
+}
 #envelope.open .wax { transform: scale(.35) rotate(22deg); opacity: 0; }
 
 #envelope .letter {
@@ -764,69 +789,70 @@ body.locked { overflow: hidden; }
   margin: 0 auto;
   height: 92%;
   top: 4%;
-  border-radius: 4px;
-  background: linear-gradient(180deg, #fffdf6 0%, #fdf5e4 100%);
-  border: 1px solid rgba(169, 128, 31, .55);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, .3);
+  border-radius: 3px;
+  background: #fdf4e0 url("card.jpg") center / cover no-repeat;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, .35), 0 0 0 1px rgba(124, 30, 56, .5);
+  z-index: 1;
+  will-change: transform;
+}
+/* The painted border owns the edges, so the type keeps to the blank centre */
+.letter-page {
+  position: absolute;
+  inset: 11.5% 11% 11.5%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: .3rem;
-  padding: .9rem .7rem calc(var(--env-height) * 0.14);
-  color: #2b2118;
-  z-index: 1;
-  will-change: transform;
+  gap: .25rem;
+  color: #3a2410;
+  text-align: center;
 }
-#envelope .letter::before,
-#envelope .letter::after {
-  content: "";
-  position: absolute;
-  border: 1px solid rgba(169, 128, 31, .6);
-  border-radius: 2px;
-  pointer-events: none;
-}
-#envelope .letter::before { inset: 6px; }
-#envelope .letter::after { inset: 11px; border-color: rgba(169, 128, 31, .3); }
-.letter-rule {
-  width: 62%;
-  max-width: 180px;
-  height: auto;
-  margin: .15rem 0;
-  fill: none;
-  stroke: #a9801f;
-  stroke-width: 1.1;
-  stroke-opacity: .75;
-  stroke-linecap: round;
-}
-.letter-rule path:nth-child(2) { fill: #a9801f; fill-opacity: .18; }
 .letter-eyebrow {
   font-family: "Cinzel", serif;
-  font-size: .72rem;
+  font-size: clamp(.56rem, 1.7vw, .74rem);
   font-weight: 600;
   letter-spacing: .22em;
   text-indent: .22em;
   text-transform: uppercase;
-  color: #8a6a14;
+  color: #8a2231;
 }
-.letter-shubh { font-family: "Tiro Devanagari", serif; font-size: .95rem; color: #8d2340; }
+.letter-shubh {
+  font-family: "Tiro Devanagari", serif;
+  font-size: clamp(.78rem, 2.3vw, 1rem);
+  color: #7c1e38;
+}
 .letter-names {
   font-family: "Great Vibes", cursive;
-  font-size: clamp(1.8rem, 7.5vw, 2.5rem);
-  line-height: 1.1;
+  font-size: clamp(1.5rem, 6.4vw, 2.3rem);
+  line-height: 1.14;
+  color: #2f1d0c;
 }
-.letter-names span { font-family: "Cinzel", serif; font-size: .68rem; color: #8a6a14; vertical-align: middle; }
-.letter-date { font-size: .95rem; font-weight: 600; letter-spacing: .05em; color: #5c4a35; }
+.letter-names span {
+  font-family: "Cinzel", serif;
+  font-size: .3em;
+  color: #9a7217;
+  vertical-align: middle;
+  padding: 0 .25em;
+}
+.letter-rule {
+  width: 58%;
+  max-width: 168px;
+  height: auto;
+  margin: .1rem 0;
+  fill: none;
+  stroke: #9a7217;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+.letter-rule path:nth-child(2) { fill: #9a7217; fill-opacity: .25; }
+.letter-date {
+  font-family: "Cinzel", serif;
+  font-size: clamp(.6rem, 1.9vw, .8rem);
+  letter-spacing: .14em;
+  text-indent: .14em;
+  color: #5a3a16;
+}
 
-/* One continuous gesture: the seal breaks, the flap folds back, the card
-   rises. The envelope stops bobbing while it opens, so the float and the
-   fold are never fighting over the same transform. */
-#envelope.open { animation: none; }
-/* z-index is discrete, so a 0s transition with a delay flips it at an exact
-   moment: the flap drops behind as it passes upright, the card comes to the
-   front only once it starts clearing the pocket. */
-/* Inside a preserve-3d parent the layers are sorted by depth, not z-index,
-   so the folded flap is pushed a few pixels behind the card's plane. */
 #envelope.open .flap {
   transform: rotateX(180deg) translateZ(6px);
   transition: transform .75s .12s cubic-bezier(.45, .05, .25, 1), z-index 0s .45s;

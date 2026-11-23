@@ -13,6 +13,8 @@ dependencies. Open `index.html` in a browser to preview.
 | `damask.svg` | Block-print tile used as the tonal watermark inside every band |
 | `art-couple.jpg`, `art-satsang.jpg`, `art-mehndi.jpg`, `art-baraat.jpg` | The arch-framed paintings |
 | `garland.png` | Painted marigold toran hung over the invitation band |
+| `card.jpg` | The illuminated border the opening card is printed on |
+| `env-paper.jpg`, `env-lining.jpg`, `env-corner.png` | The surfaces and corner piece the envelope is cut from |
 | `skyline.png` | Temple and haveli silhouette along the bottom of the hero |
 | `lantern.png` | The sky lantern, cloned and animated upward on the night bands |
 | `mandala.svg`, `pattern-bg.svg`, `floral-corner.jpg` | Earlier artwork, no longer referenced |

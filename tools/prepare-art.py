@@ -71,6 +71,14 @@ knock_out_white("art-skyline.png", "skyline.png", 1400, crop_top=0.42, colors=24
 knock_out_white("art-toran-painted.png", "garland.png", 1100,
                 crop_bottom=0.22, colors=160, trim=True)
 
+# The illuminated page the opening card is printed on
+to_jpeg("art-card.png", "card.jpg", 820, quality=80)
+
+# Surfaces the envelope is cut from, plus the corner piece printed on its front
+to_jpeg("art-paper.png", "env-paper.jpg", 640, quality=78)
+to_jpeg("art-lining.png", "env-lining.jpg", 520, quality=74)
+knock_out_white("art-corner-gold.png", "env-corner.png", 420, colors=96, trim=True)
+
 to_jpeg("art-couple.png", "art-couple.jpg", 620)
 to_jpeg("art-satsang.png", "art-satsang.jpg", 620)
 to_jpeg("art-mehndi.png", "art-mehndi.jpg", 620)
