@@ -267,14 +267,18 @@ setInterval(tick, 1000);
   }
 })();
 
-// Envelope intro. Skipped with ?intro=0, otherwise shown once per session.
+// Scroll intro. Skipped with ?intro=0, otherwise shown once per session.
 (() => {
   const params = new URLSearchParams(location.search);
   if (params.get("intro") === "0" || sessionStorage.getItem("opened-shivali")) return;
 
+  const grounds = { plum: "intro--plum", maroon: "intro--maroon", night: "intro--night" };
+  const bg = params.get("bg");
+  const groundClass = Object.prototype.hasOwnProperty.call(grounds, bg) ? grounds[bg] : "";
+
   const el = document.createElement("button");
   el.type = "button";
-  el.className = "intro";
+  el.className = "intro" + (groundClass ? " " + groundClass : "");
   el.setAttribute("aria-label", "Open the invitation");
 
   const niche = document.createElement("div");
@@ -288,123 +292,38 @@ setInterval(tick, 1000);
         ' C156 18 169 26 202 39 C246 58 286 96 286 162 V400"/>' +
     '</svg>';
 
-  const wrapper = document.createElement("div");
-  wrapper.className = "envlope-wrapper";
-
-  const envelope = document.createElement("div");
-  envelope.id = "envelope";
-  envelope.className = "close";
-
-  const letter = document.createElement("div");
-  letter.className = "letter";
-  letter.innerHTML =
-    '<div class="letter-page">' +
-      '<p class="letter-eyebrow">You are invited</p>' +
-      '<p class="letter-shubh" lang="hi">॥ शुभ विवाह ॥</p>' +
-      '<p class="letter-names">Shivali <span>&amp;</span> Aastik</p>' +
-      '<svg class="letter-rule" viewBox="0 0 160 14" aria-hidden="true" focusable="false">' +
-        '<path d="M0 7 H58 M102 7 H160"/>' +
-        '<path d="M80 1 C87 5 88 8 80 13 C72 8 73 5 80 1 Z"/>' +
-        '<path d="M66 7 C71 3 76 4 79 7 M94 7 C89 3 84 4 81 7"/>' +
-      '</svg>' +
-      '<p class="letter-date">23 January 2027</p>' +
-    '</div>';
-
-  // A patterned liner sits behind everything, so the gaps between the flap's
-  // curved edge and the pocket mouth show lining paper rather than the card.
-  const liner = document.createElement("div");
-  liner.className = "liner";
-  liner.setAttribute("aria-hidden", "true");
-
-  const pocket = document.createElement("div");
-  pocket.className = "front pocket";
-  // The envelope is cut from two painted sheets: block-printed cream paper on
-  // the outside, crimson damask inside. Both patterns are declared here and
-  // referenced by the flap, so the print runs unbroken across the fold.
-  pocket.innerHTML =
-    '<svg viewBox="0 0 300 198" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
-      '<defs>' +
-        '<pattern id="envPaper" width="300" height="198" patternUnits="userSpaceOnUse">' +
-          '<image href="env-paper.jpg" width="300" height="198" preserveAspectRatio="xMidYMid slice"/>' +
-        '</pattern>' +
-        '<pattern id="envLining" width="300" height="198" patternUnits="userSpaceOnUse">' +
-          '<image href="env-lining.jpg" width="300" height="198" preserveAspectRatio="xMidYMid slice"/>' +
-        '</pattern>' +
-        '<linearGradient id="pocketSheen" x1="0" y1="0" x2="1" y2="1">' +
-          '<stop offset="0" stop-color="#fff" stop-opacity=".3"/>' +
-          '<stop offset=".5" stop-color="#fff" stop-opacity="0"/>' +
-          '<stop offset="1" stop-color="#fff" stop-opacity=".18"/>' +
-        '</linearGradient>' +
-      '</defs>' +
-      '<path d="M0 16 Q150 140 300 16 L300 198 L0 198 Z" fill="url(#envPaper)"/>' +
-      '<path d="M0 16 Q150 140 300 16 L300 198 L0 198 Z" fill="url(#pocketSheen)"/>' +
-      '<path class="foil" d="M0 16 Q150 140 300 16"/>' +
-      '<path class="foil foil--thin" d="M13 33 Q150 145 287 33 L287 185 L13 185 Z"/>' +
-      // An illuminated corner piece at each foot of the frame, mirrored
-      '<image href="env-corner.png" width="74" height="74" transform="translate(16 182) scale(1 -1)"/>' +
-      '<image href="env-corner.png" width="74" height="74" transform="translate(284 182) scale(-1 -1)"/>' +
-      '<g class="foil" transform="translate(150 148)">' +
-        '<path d="M0 -19 C12 -9 15 1 0 17 C-15 1 -12 -9 0 -19 Z"/>' +
-        '<path class="foil--thin" d="M0 -10 C6 -4 7 0 0 8 C-7 0 -6 -4 0 -10 Z"/>' +
-        '<path d="M-28 -3 C-17 -11 -7 -9 0 1"/>' +
-        '<path d="M28 -3 C17 -11 7 -9 0 1"/>' +
-      '</g>' +
-    '</svg>';
-
-  // The flap is a real two-sided sheet: cream outside, lining paper inside.
-  // Giving it a back face means the fold never has to repaint a fill
-  // part-way through the rotation, which is what made it stutter.
-  const flapShape = "M0 0 H300 C282 46 224 84 150 118 C76 84 18 46 0 0 Z";
-  const flap = document.createElement("div");
-  flap.className = "front flap";
-  flap.innerHTML =
-    '<div class="flap-face">' +
-      '<svg viewBox="0 0 300 118" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
-        '<path d="' + flapShape + '" fill="url(#envPaper)"/>' +
-        '<path d="' + flapShape + '" fill="url(#pocketSheen)" opacity=".6"/>' +
-        '<path class="foil" d="M0 0 C18 46 76 84 150 118 C224 84 282 46 300 0"/>' +
-        '<path class="foil foil--thin" d="M12 2 C29 43 83 78 150 106 C217 78 271 43 288 2"/>' +
-        '<path class="foil foil--thin" d="M20 2 C36 40 88 73 150 99 C212 73 264 40 280 2"/>' +
-        '<g class="foil" transform="translate(150 74)">' +
-          '<path d="M0 -13 C9 -6 11 1 0 12 C-11 1 -9 -6 0 -13 Z"/>' +
-          '<path class="foil--thin" d="M-20 -3 C-12 -8 -6 -6 0 0"/>' +
-          '<path class="foil--thin" d="M20 -3 C12 -8 6 -6 0 0"/>' +
-          '<path class="foil--thin" d="M-30 -9 H-52 M30 -9 H52"/>' +
-        '</g>' +
-      '</svg>' +
+  const scroll = document.createElement("div");
+  scroll.className = "intro-scroll";
+  scroll.innerHTML =
+    '<div class="scroll-sheet" aria-hidden="true">' +
+      '<div class="scroll-sheet-inner">' +
+        '<p class="scroll-eyebrow">You are invited</p>' +
+        '<p class="scroll-shubh" lang="hi">॥ शुभ विवाह ॥</p>' +
+        '<p class="scroll-names">Shivali <span>&amp;</span> Aastik</p>' +
+        '<svg class="scroll-rule" viewBox="0 0 160 14" aria-hidden="true" focusable="false">' +
+          '<path d="M0 7 H58 M102 7 H160"/>' +
+          '<path d="M80 1 C87 5 88 8 80 13 C72 8 73 5 80 1 Z"/>' +
+          '<path d="M66 7 C71 3 76 4 79 7 M94 7 C89 3 84 4 81 7"/>' +
+        '</svg>' +
+        '<p class="scroll-date">23 January 2027</p>' +
+      '</div>' +
     '</div>' +
-    '<div class="flap-face flap-face--back">' +
-      '<svg viewBox="0 0 300 118" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
-        '<path d="' + flapShape + '" fill="url(#envLining)"/>' +
-        '<path d="' + flapShape + '" fill="url(#pocketSheen)" opacity=".35"/>' +
+    '<div class="scroll-rod scroll-rod--top" aria-hidden="true"></div>' +
+    '<div class="scroll-rod scroll-rod--bot" aria-hidden="true"></div>' +
+    '<div class="scroll-cord" aria-hidden="true">' +
+      '<svg viewBox="0 0 26 120" preserveAspectRatio="xMidYMin meet">' +
+        '<path class="thread" d="M13 0 C19 16 7 30 13 46 C17 58 11 66 13 76"/>' +
+        '<rect class="band" x="7" y="76" width="12" height="7" rx="2"/>' +
+        '<path class="tassel" d="M8 83 H18 L20 104 C20 110 6 110 6 104 Z"/>' +
+        '<path class="thread" d="M9 104 V116 M13 106 V118 M17 104 V116"/>' +
       '</svg>' +
     '</div>';
-
-  const wax = document.createElement("div");
-  wax.className = "wax";
-  wax.setAttribute("aria-hidden", "true");
-  // A pressed lotus, cut as relief: a dark impression under a lit highlight
-  wax.innerHTML =
-    '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">' +
-      '<g class="wax-relief">' +
-        '<path d="M24 9 C31 17 31 24 24 32 C17 24 17 17 24 9 Z"/>' +
-        '<path d="M24 15 C28 20 28 24 24 28 C20 24 20 20 24 15 Z"/>' +
-        '<path d="M9 24 C15 17 20 18 24 24 C20 30 15 31 9 24 Z"/>' +
-        '<path d="M39 24 C33 17 28 18 24 24 C28 30 33 31 39 24 Z"/>' +
-        '<circle cx="24" cy="38" r="2"/>' +
-      '</g>' +
-    '</svg>';
-
-  envelope.append(letter, liner, pocket, flap, wax);
-  wrapper.append(envelope);
 
   const hint = document.createElement("p");
   hint.className = "intro-hint";
   hint.innerHTML = "<span>Tap to open</span>";
 
-  el.append(niche, wrapper, hint);
-  // A reload can restore the old scroll position behind the locked overlay,
-  // which would drop the reader halfway down the page once it closes.
+  el.append(niche, scroll, hint);
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   window.scrollTo(0, 0);
   document.body.classList.add("locked");
@@ -415,15 +334,14 @@ setInterval(tick, 1000);
     if (opening) return;
     opening = true;
     sessionStorage.setItem("opened-shivali", "1");
-    envelope.classList.remove("close");
-    envelope.classList.add("open");
+    scroll.classList.add("open");
     el.classList.add("opening");
-    // The card settles at about 1.6s; hold it long enough to read, then go.
+    // The sheet finishes unrolling at about 1.5s; hold it long enough to read.
     window.setTimeout(() => {
       el.classList.add("done");
       document.body.classList.remove("locked");
       window.setTimeout(() => el.remove(), 700);
-    }, 2900);
+    }, 3100);
   };
 
   el.addEventListener("click", open);

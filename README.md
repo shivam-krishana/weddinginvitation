@@ -8,13 +8,13 @@ dependencies. Open `index.html` in a browser to preview.
 | File | What it holds |
 | --- | --- |
 | `index.html` | All visible text: hero, invitation wording, the events, RSVP, footer |
-| `style.css` | The band palette, type scale, arch framing, envelope and motion |
-| `script.js` | Map links, countdown, envelope intro, sky lanterns, scroll effects |
+| `style.css` | The band palette, type scale, arch framing, scroll opening and motion |
+| `script.js` | Map links, countdown, scroll intro, sky lanterns, scroll effects |
 | `damask.svg` | Block-print tile used as the tonal watermark inside every band |
 | `art-couple.jpg`, `art-satsang.jpg`, `art-mehndi.jpg`, `art-baraat.jpg` | The arch-framed paintings |
 | `garland.png` | Painted marigold toran hung over the invitation band |
 | `card.jpg` | The illuminated border the opening card is printed on |
-| `scroll.html` | Prototype of a scroll opening, kept out of the invitation until it is judged |
+| `scroll.html` | Standalone copy of the opening scroll for side‑by‑side comparison |
 | `scroll-page.jpg`, `scroll-rod.png` | The prototype's parchment page and its rosewood rod |
 | `env-paper.jpg`, `env-lining.jpg`, `env-corner.png` | The surfaces and corner piece the envelope is cut from |
 | `skyline.png` | Temple and haveli silhouette along the bottom of the hero |
@@ -64,14 +64,14 @@ The one value `script.js` holds is `WEDDING_START`, the date and time the hero c
 down to. It is written with an explicit `+05:30` offset so the countdown ends at the same real
 moment for guests in any timezone.
 
-## Opening envelope
+## Opening scroll
 
-Append `?intro=0` to skip the tap-to-open screen. Otherwise the envelope is shown once per
-browser session. It is dressed to match the page it opens onto: cream paper block-printed with
-the same buti motif the bands carry, triple gold foil rules, a deep-crimson patterned liner and
-a wax seal with a double gold ring, standing on the indigo night ground under the same damask
-watermark. It is built from two inline SVG sheets (a pointed euro flap and a dipped-mouth
-pocket), so the geometry scales with `--env-width`.
+Append `?intro=0` to skip the tap-to-open screen. Otherwise a royal scroll is shown once per
+browser session on a deep jade ground (so it does not repeat the hero’s night blue), under the
+same damask watermark and palace niche as the bands inside. Tap once to unroll an illuminated
+parchment page (`scroll-page.jpg`) between two rosewood rods (`scroll-rod.png`); the overlay
+fades into the invitation after the sheet has finished unrolling. Optional grounds for testing:
+`?bg=plum`, `?bg=maroon`, or `?bg=night`. The toggle-able demo lives at `scroll.html`.
 
 ## Motion
 
