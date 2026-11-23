@@ -72,6 +72,20 @@ def to_jpeg(src_name, out_name, width, quality=72):
     print(out_name, img.size, os.path.getsize(os.path.join(OUT, out_name)) // 1024, "KB")
 
 
+def to_jpeg_og(src_name, out_name, width=1200, height=630, quality=80):
+    """Crop-resize to the Open Graph size WhatsApp and Instagram expect."""
+    img = Image.open(os.path.join(ASSETS, src_name)).convert("RGB")
+    w, h = img.size
+    scale = max(width / w, height / h)
+    nw, nh = round(w * scale), round(h * scale)
+    img = img.resize((nw, nh), Image.LANCZOS)
+    left = (nw - width) // 2
+    top = (nh - height) // 2
+    img = img.crop((left, top, left + width, top + height))
+    img.save(os.path.join(OUT, out_name), "JPEG", quality=quality, optimize=True)
+    print(out_name, img.size, os.path.getsize(os.path.join(OUT, out_name)) // 1024, "KB")
+
+
 knock_out_white("art-lantern.png", "lantern.png", 150)
 knock_out_white("art-skyline.png", "skyline.png", 1400, crop_top=0.42, colors=24)
 # The marigold toran hangs over the invitation band, so it keeps its alpha.
@@ -90,6 +104,8 @@ to_jpeg("art-scroll-page.png", "scroll-page.jpg", 700, quality=80)
 to_jpeg("art-paper.png", "env-paper.jpg", 640, quality=78)
 to_jpeg("art-lining.png", "env-lining.jpg", 520, quality=74)
 knock_out_white("art-corner-gold.png", "env-corner.png", 420, colors=96, trim=True)
+
+to_jpeg_og("art-og-share.png", "og.jpg")
 
 to_jpeg("art-couple.png", "art-couple.jpg", 620)
 to_jpeg("art-satsang.png", "art-satsang.jpg", 620)
