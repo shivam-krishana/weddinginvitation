@@ -13,22 +13,25 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Cinzel:wght@400;600&family=Tiro+Devanagari:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+  <div class="ambient" aria-hidden="true"></div>
+
   <!-- Cover -->
   <header class="cover">
-    <div class="frame">
+    <div class="frame frame--premium">
       <span class="corner tl"></span>
       <span class="corner tr"></span>
       <span class="corner bl"></span>
       <span class="corner br"></span>
 
       <p class="eyebrow">Wedding Invitation</p>
+      <p class="shubh" lang="hi">॥ शुभ विवाह ॥</p>
 
-      <svg class="flourish" viewBox="0 0 260 28" aria-hidden="true" focusable="false">
+      <svg class="flourish lotus-rule" viewBox="0 0 260 40" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="flourishLeft" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0" stop-color="var(--gold)" stop-opacity="0" />
@@ -39,11 +42,12 @@
             <stop offset="1" stop-color="var(--gold)" stop-opacity="0" />
           </linearGradient>
         </defs>
-        <path d="M4 14 H104" stroke="url(#flourishLeft)" />
-        <path d="M156 14 H256" stroke="url(#flourishRight)" />
-        <path d="M130 4 C119 9.5, 119 18.5, 130 24 C141 18.5, 141 9.5, 130 4 Z" />
-        <circle cx="116" cy="14" r="2.6" />
-        <circle cx="144" cy="14" r="2.6" />
+        <path d="M4 20 H98" stroke="url(#flourishLeft)" />
+        <path d="M162 20 H256" stroke="url(#flourishRight)" />
+        <path d="M130 8c-6 4-10 8-10 12s4 8 10 12 10-8 10-12-4-8-10-12z" fill="none" stroke="var(--gold)" stroke-width="1.2"/>
+        <path d="M130 14c-3 2-5 4-5 6s2 4 5 6 5-4 5-6-2-4-5-6z" fill="var(--gold-soft)" opacity=".85"/>
+        <circle cx="108" cy="20" r="2.2" fill="var(--gold)"/>
+        <circle cx="152" cy="20" r="2.2" fill="var(--gold)"/>
       </svg>
 
       <h1 class="names">
@@ -63,7 +67,7 @@
 
   <main>
     <!-- Invitation text -->
-    <section id="invitation" class="card reveal">
+    <section id="invitation" class="card card--ornate reveal">
       <h2 class="script">Invitation</h2>
       <p class="invite">There are moments in life too joyful to celebrate alone.</p>
       <p>With hearts full of happiness and gratitude, our family requests the honour of your presence and your affectionate blessings on the auspicious occasion of the marriage of</p>
@@ -78,7 +82,7 @@
     <h2 class="section-title reveal">Celebrations</h2>
     <div class="timeline">
 
-      <article class="event reveal">
+      <article class="event card--ornate reveal">
         <p class="when">Sunday · 17th January, 2027</p>
         <h3>Ramayan Path</h3>
         <p class="time">9:00 am onwards</p>
@@ -89,7 +93,7 @@
         </div>
       </article>
 
-      <article class="event reveal">
+      <article class="event card--ornate reveal">
         <p class="when">Monday · 18th January, 2027</p>
         <h3>Satsang</h3>
         <p class="time">11:00 am – 3:00 pm</p>
@@ -100,7 +104,7 @@
         </div>
       </article>
 
-      <article class="event reveal">
+      <article class="event card--ornate reveal">
         <p class="when">Wednesday · 20th January, 2027</p>
         <h3>Lunch</h3>
         <p class="time">2:00 pm onwards</p>
@@ -111,7 +115,7 @@
         </div>
       </article>
 
-      <article class="event reveal">
+      <article class="event card--ornate reveal">
         <p class="when">Thursday · 21st January, 2027</p>
         <h3>Mehndi <em>&amp;</em> Sangeet</h3>
         <p class="time">12:00 pm – 4:00 pm</p>
@@ -122,7 +126,7 @@
         </div>
       </article>
 
-      <article class="event reveal">
+      <article class="event card--ornate reveal">
         <p class="when">Saturday · 23rd January, 2027</p>
         <h3>Saanth</h3>
         <p class="time">5:00 pm</p>
@@ -133,7 +137,7 @@
         </div>
       </article>
 
-      <article class="event reveal">
+      <article class="event card--ornate reveal">
         <p class="when">Saturday · 23rd January, 2027</p>
         <h3>Baraat</h3>
         <p class="time">8:00 pm onwards</p>
@@ -146,7 +150,7 @@
     </div>
 
     <!-- RSVP -->
-    <section class="card reveal" id="rsvp">
+    <section class="card card--ornate reveal" id="rsvp">
       <h2 class="rsvp-title">R.S.V.P.</h2>
       <p>We would be delighted to hear from you.</p>
       <div class="actions center">
