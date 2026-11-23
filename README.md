@@ -37,7 +37,7 @@ everywhere reads as busy rather than alive:
 | Satsang, plum | the painting alone |
 | Lunch, ochre | marigold petals drifting down |
 | Mehndi, rose | the painting alone |
-| Saanth, jade | a rangoli that draws itself on arrival |
+| Saanth, jade | a rangoli that draws itself on arrival, masked to its upper half |
 | Baraat, night | lanterns and fireworks |
 | R.S.V.P., plum | a drawn ogee arch |
 | Footer, night | the diya, its flame flickering over a pulsing glow |
@@ -63,9 +63,11 @@ moment for guests in any timezone.
 ## Opening envelope
 
 Append `?intro=0` to skip the tap-to-open screen. Otherwise the envelope is shown once per
-browser session. It is cream paper with gold foil rules and a deep-crimson patterned liner,
-built from two inline SVG sheets (a pointed euro flap and a dipped-mouth pocket) so the
-geometry scales with `--env-width`.
+browser session. It is dressed to match the page it opens onto: cream paper block-printed with
+the same buti motif the bands carry, triple gold foil rules, a deep-crimson patterned liner and
+a wax seal with a double gold ring, standing on the indigo night ground under the same damask
+watermark. It is built from two inline SVG sheets (a pointed euro flap and a dipped-mouth
+pocket), so the geometry scales with `--env-width`.
 
 ## Motion
 

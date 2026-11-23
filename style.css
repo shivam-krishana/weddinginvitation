@@ -24,7 +24,7 @@
   /* Opening envelope */
   --env-paper: #f4e6c9;
   --env-paper-2: #e6d2aa;
-  --env-liner: #8d2340;
+  --env-liner: #7c1e38;
   --env-width: min(88vw, 440px);
   --env-height: calc(var(--env-width) * 0.66);
 }
@@ -356,6 +356,9 @@ body.locked .grain { display: none; }
   opacity: 0;
   transform: translate(-50%, -50%);
   transition: opacity 1.6s ease;
+  /* Only the upper half is wanted: the lower arcs crowded the venue lines */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0 42%, transparent 62%);
+  mask-image: linear-gradient(to bottom, #000 0 42%, transparent 62%);
 }
 .rangoli.reveal.in { opacity: .34; transform: translate(-50%, -50%); }
 .rangoli svg { width: 100%; height: 100%; }
@@ -606,7 +609,18 @@ body.locked { overflow: hidden; }
   padding: 1.5rem;
   overflow: hidden;
   background: linear-gradient(170deg, #0d1733 0%, var(--night) 45%, var(--night-2) 100%);
+  box-shadow: inset 0 0 200px rgba(0, 0, 0, .6);
   transition: opacity .6s ease, transform .6s ease;
+}
+/* The same block-print watermark the bands carry, so the cover belongs to them */
+.intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("damask.svg");
+  background-size: 118px 118px;
+  opacity: .055;
+  pointer-events: none;
 }
 .intro.done { opacity: 0; transform: scale(1.05); pointer-events: none; }
 .intro::after {
@@ -625,15 +639,26 @@ body.locked { overflow: hidden; }
 .intro-hint {
   position: relative;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   font-family: "Cinzel", serif;
-  font-size: .72rem;
+  font-size: .82rem;
   font-weight: 600;
-  letter-spacing: .34em;
-  text-indent: .34em;
+  letter-spacing: .26em;
+  text-indent: .26em;
   text-transform: uppercase;
   color: var(--gold);
   animation: bob 2.2s ease-in-out infinite;
 }
+.intro-hint::before,
+.intro-hint::after {
+  content: "";
+  width: clamp(26px, 9vw, 54px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.intro-hint::after { transform: scaleX(-1); }
 
 .envlope-wrapper {
   position: relative;
@@ -722,8 +747,12 @@ body.locked { overflow: hidden; }
   font-family: "Great Vibes", cursive;
   font-size: 1.1rem;
   color: #ffe9c6;
-  background: radial-gradient(circle at 34% 30%, #b8395a, var(--env-liner) 72%);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, .5), inset 0 0 0 3px rgba(255, 233, 198, .35);
+  background: radial-gradient(circle at 34% 30%, #a62a48, #6f172f 78%);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, .55),
+    inset 0 0 0 2px rgba(255, 233, 198, .45),
+    inset 0 0 0 5px rgba(169, 128, 31, .55),
+    inset 0 -4px 9px rgba(0, 0, 0, .35);
   transition: transform .4s cubic-bezier(.3, 0, .2, 1), opacity .4s ease;
   will-change: transform, opacity;
 }
@@ -749,14 +778,28 @@ body.locked { overflow: hidden; }
   z-index: 1;
   will-change: transform;
 }
-#envelope .letter::before {
+#envelope .letter::before,
+#envelope .letter::after {
   content: "";
   position: absolute;
-  inset: 7px;
-  border: 1px solid rgba(185, 143, 46, .6);
+  border: 1px solid rgba(169, 128, 31, .6);
   border-radius: 2px;
   pointer-events: none;
 }
+#envelope .letter::before { inset: 6px; }
+#envelope .letter::after { inset: 11px; border-color: rgba(169, 128, 31, .3); }
+.letter-rule {
+  width: 62%;
+  max-width: 180px;
+  height: auto;
+  margin: .15rem 0;
+  fill: none;
+  stroke: #a9801f;
+  stroke-width: 1.1;
+  stroke-opacity: .75;
+  stroke-linecap: round;
+}
+.letter-rule path:nth-child(2) { fill: #a9801f; fill-opacity: .18; }
 .letter-eyebrow {
   font-family: "Cinzel", serif;
   font-size: .72rem;
