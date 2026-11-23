@@ -1,6 +1,5 @@
-// What the cover countdown runs down to, in India Standard Time (UTC+05:30).
-// TODO: confirm the start time; only the date is final.
-const WEDDING_START = "2027-01-23T19:00+05:30";
+// What the cover countdown runs down to, in India Standard Time (UTC+05:30)
+const WEDDING_START = "2027-01-23T20:00+05:30";
 
 // Map links
 document.querySelectorAll("[data-map]").forEach((a) => {
