@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+  <g fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- centre buti -->
+    <path d="M80 44 C92 56 96 68 80 86 C64 68 68 56 80 44 Z"/>
+    <path d="M80 60 C86 66 87 72 80 80 C73 72 74 66 80 60 Z"/>
+    <path d="M80 86 V104"/>
+    <path d="M80 94 C70 92 64 86 62 78"/>
+    <path d="M80 94 C90 92 96 86 98 78"/>
+    <path d="M58 100 C68 100 76 104 80 110 C84 104 92 100 102 100"/>
+
+    <!-- corner quarter motifs -->
+    <path d="M0 24 C10 24 18 18 20 8"/>
+    <path d="M160 24 C150 24 142 18 140 8"/>
+    <path d="M0 136 C10 136 18 142 20 152"/>
+    <path d="M160 136 C150 136 142 142 140 152"/>
+
+    <!-- connecting vines -->
+    <path d="M0 80 C14 80 24 72 30 62"/>
+    <path d="M160 80 C146 80 136 72 130 62"/>
+    <path d="M30 62 C34 56 34 48 30 42"/>
+    <path d="M130 62 C126 56 126 48 130 42"/>
+  </g>
+  <g fill="#ffffff">
+    <circle cx="80" cy="38" r="2.6"/>
+    <circle cx="80" cy="114" r="2.2"/>
+    <circle cx="26" cy="36" r="1.8"/>
+    <circle cx="134" cy="36" r="1.8"/>
+    <circle cx="8" cy="80" r="1.6"/>
+    <circle cx="152" cy="80" r="1.6"/>
+  </g>
+</svg>

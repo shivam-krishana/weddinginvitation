@@ -6,6 +6,7 @@
   <title>Shivali weds Aastik · Wedding Invitation</title>
   <meta name="description" content="You are warmly invited to the wedding of Shivali & Aastik — 23rd January, 2027.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#132548">
   <meta property="og:title" content="Shivali weds Aastik">
   <meta property="og:description" content="Wedding Invitation · 23rd January, 2027">
   <meta property="og:type" content="website">
@@ -13,51 +14,32 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Cinzel:wght@400;600&family=Tiro+Devanagari:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Cinzel:wght@400;600&family=Tiro+Devanagari:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="ambient" aria-hidden="true"></div>
-  <div class="petals" id="petals" aria-hidden="true"></div>
+  <!-- Ogee arch used to frame every painting -->
+  <svg class="svg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <clipPath id="archClip" clipPathUnits="objectBoundingBox">
+        <path d="M0 1 V0.40 C0 0.22 0.14 0.115 0.30 0.065 C0.42 0.032 0.47 0.014 0.5 0 C0.53 0.014 0.58 0.032 0.70 0.065 C0.86 0.115 1 0.22 1 0.40 V1 Z"/>
+      </clipPath>
+    </defs>
+  </svg>
 
-  <!-- Reading progress -->
+  <div class="grain" aria-hidden="true"></div>
   <div class="scroll-progress" aria-hidden="true"><i id="progressBar"></i></div>
 
-  <!-- Cover -->
-  <header class="cover">
-    <div class="mandala" id="mandala" aria-hidden="true"></div>
-    <div class="frame frame--premium">
-      <span class="corner tl"></span>
-      <span class="corner tr"></span>
-      <span class="corner bl"></span>
-      <span class="corner br"></span>
+  <!-- Hero -->
+  <header class="band band--night hero">
+    <div class="lanterns" id="lanterns" aria-hidden="true"></div>
+    <div class="stars" aria-hidden="true"></div>
+    <img class="skyline" id="skyline" src="skyline.png" alt="" aria-hidden="true">
 
-      <img class="bloom bloom--tl" src="floral-corner.jpg" alt="" aria-hidden="true">
-      <img class="bloom bloom--br" src="floral-corner.jpg" alt="" aria-hidden="true">
-
-      <div class="frame-inner" id="coverInner">
-      <p class="eyebrow">Wedding Invitation</p>
+    <div class="band-inner hero-inner" id="heroInner">
+      <p class="kicker">Wedding Invitation</p>
       <p class="shubh" lang="hi">॥ शुभ विवाह ॥</p>
-
-      <svg class="flourish lotus-rule" viewBox="0 0 260 40" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="flourishLeft" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="var(--gold)" stop-opacity="0" />
-            <stop offset="1" stop-color="var(--gold)" stop-opacity="1" />
-          </linearGradient>
-          <linearGradient id="flourishRight" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="var(--gold)" stop-opacity="1" />
-            <stop offset="1" stop-color="var(--gold)" stop-opacity="0" />
-          </linearGradient>
-        </defs>
-        <path d="M4 20 H98" stroke="url(#flourishLeft)" />
-        <path d="M162 20 H256" stroke="url(#flourishRight)" />
-        <path d="M130 8c-6 4-10 8-10 12s4 8 10 12 10-8 10-12-4-8-10-12z" fill="none" stroke="var(--gold)" stroke-width="1.2"/>
-        <path d="M130 14c-3 2-5 4-5 6s2 4 5 6 5-4 5-6-2-4-5-6z" fill="var(--gold-soft)" opacity=".85"/>
-        <circle cx="108" cy="20" r="2.2" fill="var(--gold)"/>
-        <circle cx="152" cy="20" r="2.2" fill="var(--gold)"/>
-      </svg>
 
       <h1 class="names">
         <span>Shivali</span>
@@ -65,144 +47,135 @@
         <span>Aastik</span>
       </h1>
 
-      <p class="date">Saturday, 23rd January, 2027</p>
+      <p class="hero-date">Saturday, 23<sup>rd</sup> January 2027</p>
 
       <div id="countdown" class="countdown" aria-live="polite"></div>
       <p class="countdown-label">until the celebrations begin</p>
-
-      <a href="#invitation" class="scroll-hint">Scroll to open ↓</a>
-      </div>
     </div>
+
+    <a href="#invitation" class="scroll-hint">Scroll<span aria-hidden="true">↓</span></a>
   </header>
 
   <main>
-    <!-- Invitation text -->
-    <section id="invitation" class="card card--ornate reveal">
-      <h2 class="script">Invitation</h2>
-      <p class="invite">There are moments in life too joyful to celebrate alone.</p>
-      <p>With hearts full of happiness and gratitude, our family requests the honour of your presence and your affectionate blessings on the auspicious occasion of the marriage of</p>
-      <p class="script-name">Shivali</p>
-      <p class="with">with</p>
-      <p class="script-name">Aastik</p>
-      <p>as they begin their journey together, surrounded by the love of those dearest to them.</p>
-      <div class="divider"><span>❖</span></div>
+
+    <!-- Invitation -->
+    <section id="invitation" class="band band--saffron band--tall">
+      <div class="band-inner">
+        <figure class="arch reveal">
+          <img src="art-couple.jpg" alt="A miniature painting of a bride and groom exchanging garlands" loading="lazy" decoding="async">
+        </figure>
+        <p class="kicker reveal">Together with our families</p>
+        <p class="lead reveal">There are moments in life too joyful to celebrate alone.</p>
+        <p class="reveal">With hearts full of happiness and gratitude, our family requests the honour of your presence and your affectionate blessings on the auspicious occasion of the marriage of</p>
+        <p class="pair reveal">Shivali <em>&amp;</em> Aastik</p>
+        <p class="reveal">as they begin their journey together, surrounded by the love of those dearest to them.</p>
+        <div class="rule reveal" aria-hidden="true"></div>
+      </div>
     </section>
 
-    <!-- Events -->
-    <section class="celebrations">
-    <h2 class="section-title">Celebrations</h2>
-    <div class="timeline">
-      <span class="timeline-track" aria-hidden="true"><i id="timelineFill"></i></span>
-
-      <div class="t-item reveal">
-      <span class="t-dot" aria-hidden="true"></span>
-      <article class="event card--ornate">
-        <p class="when">Sunday · 17th January, 2027</p>
-        <h3>Ramayan Path</h3>
-        <p class="time">9:00 am onwards</p>
-        <p class="invite">You are requested to join us for Ramayan Path</p>
-        <p class="venue"><b>At our residence</b><br>Gurah Jattan, Ghagwal,<br>Samba, J&amp;K</p>
-        <div class="actions">
-          <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/sNL2cnASGPZSPWwYA">Open map</a>
-        </div>
-      </article>
+    <!-- Celebrations -->
+    <section class="band band--jade event">
+      <div class="band-inner">
+        <p class="kicker reveal">On the following occasions</p>
+        <p class="when reveal">Sunday · 17<sup>th</sup> January 2027</p>
+        <h2 class="event-name reveal">Ramayan Path</h2>
+        <p class="event-time reveal">9:00 am onwards</p>
+        <div class="rule reveal" aria-hidden="true"></div>
+        <p class="venue reveal"><b>At our residence</b><br>Gurah Jattan, Ghagwal, Samba, J&amp;K</p>
+        <p class="reveal"><a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/sNL2cnASGPZSPWwYA">Open map</a></p>
       </div>
+    </section>
 
-      <div class="t-item reveal">
-      <span class="t-dot" aria-hidden="true"></span>
-      <article class="event card--ornate">
-        <p class="when">Monday · 18th January, 2027</p>
-        <h3>Satsang</h3>
-        <p class="time">11:00 am – 3:00 pm</p>
-        <p class="invite">You are requested to join us for Satsang</p>
-        <p class="venue"><b>At our residence</b><br>Gurah Jattan, Ghagwal,<br>Samba, J&amp;K</p>
-        <div class="actions">
-          <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/sNL2cnASGPZSPWwYA">Open map</a>
-        </div>
-      </article>
+    <section class="band band--plum event">
+      <div class="band-inner">
+        <p class="when reveal">Monday · 18<sup>th</sup> January 2027</p>
+        <h2 class="event-name reveal">Satsang</h2>
+        <p class="event-time reveal">11:00 am – 3:00 pm</p>
+        <div class="rule reveal" aria-hidden="true"></div>
+        <p class="venue reveal"><b>At our residence</b><br>Gurah Jattan, Ghagwal, Samba, J&amp;K</p>
+        <p class="reveal"><a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/sNL2cnASGPZSPWwYA">Open map</a></p>
       </div>
+    </section>
 
-      <div class="t-item reveal">
-      <span class="t-dot" aria-hidden="true"></span>
-      <article class="event card--ornate">
-        <p class="when">Wednesday · 20th January, 2027</p>
-        <h3>Lunch</h3>
-        <p class="time">2:00 pm onwards</p>
-        <p class="invite">You are requested to join us for lunch</p>
-        <p class="venue"><b>At our residence</b><br>Gurah Jattan, Ghagwal,<br>Samba, J&amp;K</p>
-        <div class="actions">
-          <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/sNL2cnASGPZSPWwYA">Open map</a>
-        </div>
-      </article>
+    <section class="band band--ochre event">
+      <div class="band-inner">
+        <p class="when reveal">Wednesday · 20<sup>th</sup> January 2027</p>
+        <h2 class="event-name reveal">Lunch</h2>
+        <p class="event-time reveal">2:00 pm onwards</p>
+        <div class="rule reveal" aria-hidden="true"></div>
+        <p class="venue reveal"><b>At our residence</b><br>Gurah Jattan, Ghagwal, Samba, J&amp;K</p>
+        <p class="reveal"><a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/sNL2cnASGPZSPWwYA">Open map</a></p>
       </div>
+    </section>
 
-      <div class="t-item reveal">
-      <span class="t-dot" aria-hidden="true"></span>
-      <article class="event card--ornate">
-        <p class="when">Thursday · 21st January, 2027</p>
-        <h3>Mehndi <em>&amp;</em> Sangeet</h3>
-        <p class="time">12:00 pm – 4:00 pm</p>
-        <p class="invite">You are requested to join us for Mehndi and Sangeet</p>
-        <p class="venue"><b>Shivam RK Resort</b><br>Ghagwal, Samba,<br>J&amp;K</p>
-        <div class="actions">
-          <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/Z7aTw43mq8wJzPbM8">Open map</a>
-        </div>
-      </article>
+    <section class="band band--rose band--tall event">
+      <div class="band-inner">
+        <figure class="arch reveal">
+          <img src="art-mehndi.jpg" alt="A miniature painting of women applying mehndi in a courtyard" loading="lazy" decoding="async">
+        </figure>
+        <p class="when reveal">Thursday · 21<sup>st</sup> January 2027</p>
+        <h2 class="event-name reveal">Mehndi <em>&amp;</em> Sangeet</h2>
+        <p class="event-time reveal">12:00 pm – 4:00 pm</p>
+        <div class="rule reveal" aria-hidden="true"></div>
+        <p class="venue reveal"><b>Shivam RK Resort</b><br>Ghagwal, Samba, J&amp;K</p>
+        <p class="reveal"><a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/Z7aTw43mq8wJzPbM8">Open map</a></p>
       </div>
+    </section>
 
-      <div class="t-item reveal">
-      <span class="t-dot" aria-hidden="true"></span>
-      <article class="event card--ornate">
-        <p class="when">Saturday · 23rd January, 2027</p>
-        <h3>Saanth</h3>
-        <p class="time">5:00 pm</p>
-        <p class="invite">You are requested to join us for Saanth</p>
-        <p class="venue"><b>At our residence</b><br>Gurah Jattan, Ghagwal,<br>Samba, J&amp;K</p>
-        <div class="actions">
-          <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/sNL2cnASGPZSPWwYA">Open map</a>
-        </div>
-      </article>
+    <section class="band band--jade event">
+      <div class="band-inner">
+        <p class="when reveal">Saturday · 23<sup>rd</sup> January 2027</p>
+        <h2 class="event-name reveal">Saanth</h2>
+        <p class="event-time reveal">5:00 pm</p>
+        <div class="rule reveal" aria-hidden="true"></div>
+        <p class="venue reveal"><b>At our residence</b><br>Gurah Jattan, Ghagwal, Samba, J&amp;K</p>
+        <p class="reveal"><a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/sNL2cnASGPZSPWwYA">Open map</a></p>
       </div>
+    </section>
 
-      <div class="t-item t-item--final reveal">
-      <span class="t-dot" aria-hidden="true"></span>
-      <article class="event card--ornate">
-        <p class="when">Saturday · 23rd January, 2027</p>
-        <h3>Baraat</h3>
-        <p class="time">8:00 pm onwards</p>
-        <p class="invite">You are requested to grace the wedding ceremony</p>
-        <p class="venue"><b>Ramada Plaza by Wyndham</b><br>Vijaypur, Samba,<br>Jammu &amp; Kashmir</p>
-        <div class="actions">
-          <a class="btn" target="_blank" rel="noopener" data-map="Ramada Plaza by Wyndham - Jammu, Vijaypur, Samba, Jammu and Kashmir">Open map</a>
-        </div>
-      </article>
+    <section class="band band--night band--tall event">
+      <div class="lanterns lanterns--sparse" id="lanterns2" aria-hidden="true"></div>
+      <div class="band-inner">
+        <figure class="arch reveal">
+          <img src="art-baraat.jpg" alt="A miniature painting of a baraat procession at night" loading="lazy" decoding="async">
+        </figure>
+        <p class="when reveal">Saturday · 23<sup>rd</sup> January 2027</p>
+        <h2 class="event-name reveal">Baraat</h2>
+        <p class="event-time reveal">8:00 pm onwards</p>
+        <div class="rule reveal" aria-hidden="true"></div>
+        <p class="venue reveal"><b>Ramada Plaza by Wyndham</b><br>Vijaypur, Samba, Jammu &amp; Kashmir</p>
+        <p class="reveal"><a class="btn" target="_blank" rel="noopener" data-map="Ramada Plaza by Wyndham - Jammu, Vijaypur, Samba, Jammu and Kashmir">Open map</a></p>
       </div>
-    </div>
     </section>
 
     <!-- RSVP -->
-    <section class="card card--ornate reveal" id="rsvp">
-      <h2 class="rsvp-title">R.S.V.P.</h2>
-      <p>We would be delighted to hear from you.</p>
-      <div class="actions center">
-        <a class="btn" data-wa="919469151600">WhatsApp · 94691 51600</a>
-        <a class="btn ghost" href="tel:+919469151600">Call · 94691 51600</a>
+    <section id="rsvp" class="band band--plum">
+      <div class="band-inner">
+        <p class="kicker reveal">We would be delighted to hear from you</p>
+        <h2 class="event-name reveal">Please R.S.V.P.</h2>
+        <div class="rule reveal" aria-hidden="true"></div>
+        <p class="reveal actions">
+          <a class="btn" data-wa="919469151600">WhatsApp · 94691 51600</a>
+          <a class="btn ghost" href="tel:+919469151600">Call · 94691 51600</a>
+        </p>
       </div>
     </section>
   </main>
 
-  <footer class="reveal">
-    <svg class="diya" viewBox="0 0 120 90" aria-hidden="true" focusable="false">
-      <g class="diya-flame">
-        <path class="flame-outer" d="M60 8c7 10 12 16 12 23a12 12 0 0 1-24 0c0-7 5-13 12-23z"/>
-        <path class="flame-inner" d="M60 22c3 5 5 8 5 11a5 5 0 0 1-10 0c0-3 2-6 5-11z"/>
-      </g>
-      <path class="diya-glow" d="M60 44c22 0 36 2 36 6s-14 8-36 8-36-4-36-8 14-6 36-6z"/>
-      <path class="diya-bowl" d="M26 52h68c-3 14-15 22-34 22S29 66 26 52z"/>
-      <path class="diya-base" d="M44 76h32c0 4-7 6-16 6s-16-2-16-6z"/>
-    </svg>
-    <p class="compliments-lead">With Compliments From</p>
-    <p class="compliments-name">Near &amp; Dear Ones</p>
+  <footer class="band band--night">
+    <div class="band-inner">
+      <svg class="diya reveal" viewBox="0 0 120 90" aria-hidden="true" focusable="false">
+        <g class="diya-flame">
+          <path class="flame-outer" d="M60 8c7 10 12 16 12 23a12 12 0 0 1-24 0c0-7 5-13 12-23z"/>
+          <path class="flame-inner" d="M60 22c3 5 5 8 5 11a5 5 0 0 1-10 0c0-3 2-6 5-11z"/>
+        </g>
+        <path class="diya-glow" d="M60 44c22 0 36 2 36 6s-14 8-36 8-36-4-36-8 14-6 36-6z"/>
+        <path class="diya-bowl" d="M26 52h68c-3 14-15 22-34 22S29 66 26 52z"/>
+        <path class="diya-base" d="M44 76h32c0 4-7 6-16 6s-16-2-16-6z"/>
+      </svg>
+      <p class="kicker reveal">With Compliments From</p>
+      <p class="compliments-name reveal">Near &amp; Dear Ones</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>

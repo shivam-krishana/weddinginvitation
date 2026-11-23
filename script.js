@@ -1,5 +1,7 @@
-// What the cover countdown runs down to, in India Standard Time (UTC+05:30)
+// What the hero countdown runs down to, in India Standard Time (UTC+05:30)
 const WEDDING_START = "2027-01-23T20:00+05:30";
+
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // Map links
 document.querySelectorAll("[data-map]").forEach((a) => {
@@ -14,13 +16,12 @@ document.querySelectorAll("[data-wa]").forEach((a) => {
   a.rel = "noopener";
 });
 
-// Countdown to the wedding day. Built once, then only the digits change, so the
-// seconds can animate without the whole block flashing.
+// Countdown. Built once, then only the digits change, so the seconds can
+// animate without the whole block flashing.
 const target = new Date(WEDDING_START).getTime();
 const box = document.getElementById("countdown");
 const countdownLabel = document.querySelector(".countdown-label");
-const UNITS = ["Days", "Hours", "Mins", "Secs"];
-const cells = UNITS.map((label) => {
+const cells = ["Days", "Hours", "Mins", "Secs"].map((label) => {
   const cell = document.createElement("div");
   const value = document.createElement("b");
   cell.append(value, document.createTextNode(label));
@@ -34,7 +35,7 @@ function tick() {
     box.textContent = "";
     const done = document.createElement("div");
     done.className = "done";
-    done.textContent = "The celebrations have begun! 🎉";
+    done.textContent = "The celebrations have begun";
     box.append(done);
     if (countdownLabel) countdownLabel.hidden = true;
     return;
@@ -57,7 +58,34 @@ function tick() {
 tick();
 setInterval(tick, 1000);
 
-// Envelope open animation (inspired by Josh Nichols / CodePen). Skipped with ?intro=0.
+// Sky lanterns drifting up through the night bands
+(() => {
+  if (reducedMotion) return;
+
+  const fill = (layer, count) => {
+    for (let i = 0; i < count; i += 1) {
+      const lantern = document.createElement("img");
+      lantern.className = "lantern";
+      lantern.src = "lantern.png";
+      lantern.alt = "";
+      const scale = 0.55 + Math.random() * 0.85;
+      lantern.style.left = (Math.random() * 96).toFixed(2) + "%";
+      lantern.style.width = (46 * scale).toFixed(1) + "px";
+      lantern.style.animationDuration = (16 + Math.random() * 16).toFixed(1) + "s, " +
+        (4 + Math.random() * 4).toFixed(1) + "s";
+      lantern.style.animationDelay = (-Math.random() * 30).toFixed(1) + "s, " +
+        (-Math.random() * 5).toFixed(1) + "s";
+      layer.append(lantern);
+    }
+  };
+
+  const hero = document.getElementById("lanterns");
+  const baraat = document.getElementById("lanterns2");
+  if (hero) fill(hero, 14);
+  if (baraat) fill(baraat, 7);
+})();
+
+// Envelope intro. Skipped with ?intro=0, otherwise shown once per session.
 (() => {
   const params = new URLSearchParams(location.search);
   if (params.get("intro") === "0" || sessionStorage.getItem("opened-shivali")) return;
@@ -74,12 +102,6 @@ setInterval(tick, 1000);
   envelope.id = "envelope";
   envelope.className = "close";
 
-  const flap = document.createElement("div");
-  flap.className = "front flap";
-
-  const pocket = document.createElement("div");
-  pocket.className = "front pocket";
-
   const letter = document.createElement("div");
   letter.className = "letter";
   letter.innerHTML =
@@ -87,6 +109,63 @@ setInterval(tick, 1000);
     '<p class="letter-shubh" lang="hi">॥ शुभ विवाह ॥</p>' +
     '<p class="letter-names">Shivali <span>&amp;</span> Aastik</p>' +
     '<p class="letter-date">23 January 2027</p>';
+
+  // A patterned liner sits behind everything, so the gaps between the flap's
+  // curved edge and the pocket mouth show lining paper rather than the card.
+  const liner = document.createElement("div");
+  liner.className = "liner";
+  liner.setAttribute("aria-hidden", "true");
+
+  const pocket = document.createElement("div");
+  pocket.className = "front pocket";
+  pocket.innerHTML =
+    '<svg viewBox="0 0 300 198" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
+      '<defs>' +
+        '<linearGradient id="pocketPaper" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="#f6e9ce"/>' +
+          '<stop offset=".6" stop-color="#efdfbd"/>' +
+          '<stop offset="1" stop-color="#e3d0a8"/>' +
+        '</linearGradient>' +
+        '<linearGradient id="pocketSheen" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0" stop-color="#fff" stop-opacity=".35"/>' +
+          '<stop offset=".5" stop-color="#fff" stop-opacity="0"/>' +
+          '<stop offset="1" stop-color="#fff" stop-opacity=".2"/>' +
+        '</linearGradient>' +
+      '</defs>' +
+      '<path d="M0 16 Q150 140 300 16 L300 198 L0 198 Z" fill="url(#pocketPaper)"/>' +
+      '<path d="M0 16 Q150 140 300 16 L300 198 L0 198 Z" fill="url(#pocketSheen)"/>' +
+      '<path class="foil" d="M0 16 Q150 140 300 16"/>' +
+      '<path class="foil foil--thin" d="M11 31 Q150 147 289 31 L289 187 L11 187 Z"/>' +
+      '<g class="foil" transform="translate(150 148)">' +
+        '<path d="M0 -17 C11 -8 14 1 0 16 C-14 1 -11 -8 0 -17 Z"/>' +
+        '<path class="foil--thin" d="M0 -9 C5 -4 6 0 0 7 C-6 0 -5 -4 0 -9 Z"/>' +
+        '<path d="M-26 -3 C-16 -10 -7 -8 0 1"/>' +
+        '<path d="M26 -3 C16 -10 7 -8 0 1"/>' +
+        '<path class="foil--thin" d="M-38 7 H-62"/>' +
+        '<path class="foil--thin" d="M38 7 H62"/>' +
+      '</g>' +
+    '</svg>';
+
+  const flap = document.createElement("div");
+  flap.className = "front flap";
+  flap.innerHTML =
+    '<svg viewBox="0 0 300 118" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
+      '<defs>' +
+        '<linearGradient id="flapPaper" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="#f9eed8"/>' +
+          '<stop offset=".55" stop-color="#f2e3c3"/>' +
+          '<stop offset="1" stop-color="#e8d5ac"/>' +
+        '</linearGradient>' +
+      '</defs>' +
+      '<path class="paper" d="M0 0 H300 C282 46 224 84 150 118 C76 84 18 46 0 0 Z" fill="url(#flapPaper)"/>' +
+      '<path class="foil" d="M0 0 C18 46 76 84 150 118 C224 84 282 46 300 0"/>' +
+      '<path class="foil foil--thin" d="M12 2 C29 43 83 78 150 106 C217 78 271 43 288 2"/>' +
+      '<g class="foil" transform="translate(150 78)">' +
+        '<path d="M0 -12 C8 -6 10 1 0 11 C-10 1 -8 -6 0 -12 Z"/>' +
+        '<path class="foil--thin" d="M-18 -2 C-11 -7 -5 -5 0 0"/>' +
+        '<path class="foil--thin" d="M18 -2 C11 -7 5 -5 0 0"/>' +
+      '</g>' +
+    '</svg>';
 
   const wax = document.createElement("div");
   wax.className = "wax";
@@ -97,30 +176,21 @@ setInterval(tick, 1000);
   hearts.className = "hearts";
   hearts.setAttribute("aria-hidden", "true");
   hearts.innerHTML =
-    '<div class="heart a1"></div>' +
-    '<div class="heart a2 gold"></div>' +
-    '<div class="heart a3"></div>' +
-    '<div class="heart a4 gold"></div>' +
-    '<div class="heart a5"></div>' +
-    '<div class="heart a6 gold"></div>';
+    '<div class="heart a1"></div><div class="heart a2 gold"></div><div class="heart a3"></div>' +
+    '<div class="heart a4 gold"></div><div class="heart a5"></div><div class="heart a6 gold"></div>';
 
-  envelope.append(flap, pocket, letter, hearts, wax);
+  envelope.append(letter, liner, pocket, flap, hearts, wax);
   wrapper.append(envelope);
 
   const hint = document.createElement("p");
   hint.className = "intro-hint";
   hint.textContent = "Tap to open";
 
-  const blooms = ["bloom--tl", "bloom--br"].map((where) => {
-    const img = document.createElement("img");
-    img.className = "bloom " + where;
-    img.src = "floral-corner.jpg";
-    img.alt = "";
-    img.setAttribute("aria-hidden", "true");
-    return img;
-  });
-
-  el.append(...blooms, wrapper, hint);
+  el.append(wrapper, hint);
+  // A reload can restore the old scroll position behind the locked overlay,
+  // which would drop the reader halfway down the page once it closes.
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.scrollTo(0, 0);
   document.body.classList.add("locked");
   document.body.append(el);
 
@@ -135,7 +205,7 @@ setInterval(tick, 1000);
     window.setTimeout(() => {
       el.classList.add("done");
       document.body.classList.remove("locked");
-      window.setTimeout(() => el.remove(), 550);
+      window.setTimeout(() => el.remove(), 650);
     }, 3200);
   };
 
@@ -143,43 +213,23 @@ setInterval(tick, 1000);
   el.focus();
 })();
 
-// Scroll reveal
+// Scroll reveal, staggered within each band
 const io = new IntersectionObserver((entries) => {
-  entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
-}, { threshold: 0.15 });
+  entries.forEach((en) => {
+    if (!en.isIntersecting) return;
+    const siblings = Array.from(en.target.parentElement.querySelectorAll(".reveal"));
+    en.target.style.transitionDelay = Math.min(siblings.indexOf(en.target), 6) * 90 + "ms";
+    en.target.classList.add("in");
+    io.unobserve(en.target);
+  });
+}, { threshold: 0.2, rootMargin: "0px 0px -8% 0px" });
 document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-// Drifting petals
-(() => {
-  const layer = document.getElementById("petals");
-  if (!layer || reducedMotion) return;
-
-  const tints = ["", "gold", "pale"];
-  for (let i = 0; i < 13; i += 1) {
-    const petal = document.createElement("div");
-    petal.className = ("petal " + tints[i % tints.length]).trim();
-    const size = 9 + Math.random() * 11;
-    petal.style.left = (Math.random() * 100).toFixed(2) + "%";
-    petal.style.width = size.toFixed(1) + "px";
-    petal.style.height = size.toFixed(1) + "px";
-    petal.style.animationDuration = (12 + Math.random() * 12).toFixed(1) + "s, " +
-      (3 + Math.random() * 3).toFixed(1) + "s";
-    petal.style.animationDelay = (-Math.random() * 22).toFixed(1) + "s, " +
-      (-Math.random() * 4).toFixed(1) + "s";
-    layer.append(petal);
-  }
-})();
-
-// Scroll-linked motion: progress bar, cover parallax, timeline fill
+// Scroll-linked motion: progress bar and hero parallax
 (() => {
   const bar = document.getElementById("progressBar");
-  const coverInner = document.getElementById("coverInner");
-  const mandala = document.getElementById("mandala");
-  const timeline = document.querySelector(".timeline");
-  const fill = document.getElementById("timelineFill");
-  const title = document.querySelector(".section-title");
+  const heroInner = document.getElementById("heroInner");
+  const skyline = document.getElementById("skyline");
 
   let queued = false;
 
@@ -188,32 +238,21 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matc
     const y = window.scrollY;
     const vh = window.innerHeight;
 
-    // Reading progress across the whole document
     if (bar) {
       const scrollable = document.documentElement.scrollHeight - vh;
-      const pct = scrollable > 0 ? Math.min(1, y / scrollable) : 0;
-      bar.style.transform = `scaleX(${pct})`;
+      bar.style.transform = `scaleX(${scrollable > 0 ? Math.min(1, y / scrollable) : 0})`;
     }
 
-    // The cover drifts up and dissolves as the first section takes over
-    if (coverInner && !reducedMotion) {
+    // The hero text lifts away faster than the skyline behind it
+    if (!reducedMotion && y < vh * 1.2) {
       const p = Math.min(1, y / vh);
-      coverInner.style.transform = `translate3d(0, ${(-p * 70).toFixed(1)}px, 0) scale(${(1 - p * 0.05).toFixed(4)})`;
-      coverInner.style.opacity = String(Math.max(0, 1 - p * 1.25));
-      if (mandala) mandala.style.opacity = String(Math.max(0, 0.16 - p * 0.16));
-    }
-
-    // Gold line fills as you travel down the celebrations
-    if (timeline && fill) {
-      const rect = timeline.getBoundingClientRect();
-      const travelled = vh * 0.6 - rect.top;
-      const pct = Math.max(0, Math.min(1, travelled / rect.height));
-      fill.style.height = (pct * 100).toFixed(2) + "%";
-    }
-
-    // Nudge the sticky heading once it latches to the top
-    if (title) {
-      title.classList.toggle("stuck", title.getBoundingClientRect().top <= 1);
+      if (heroInner) {
+        heroInner.style.transform = `translate3d(0, ${(-p * 90).toFixed(1)}px, 0)`;
+        heroInner.style.opacity = String(Math.max(0, 1 - p * 1.3));
+      }
+      if (skyline) {
+        skyline.style.transform = `translate3d(-50%, ${(p * 40).toFixed(1)}px, 0) scale(${(1 + p * 0.06).toFixed(4)})`;
+      }
     }
   };
 
