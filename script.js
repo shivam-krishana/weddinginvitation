@@ -303,7 +303,6 @@ setInterval(tick, 1000);
 
   const scroll = document.createElement("div");
   scroll.className = "intro-scroll";
-  // The lower rod sits inside the sheet column so it travels with the unrolling edge.
   scroll.innerHTML =
     '<div class="scroll-rod scroll-rod--top" aria-hidden="true"></div>' +
     '<div class="scroll-sheet" aria-hidden="true">' +
@@ -318,8 +317,8 @@ setInterval(tick, 1000);
         '</svg>' +
         '<p class="scroll-date">23 January 2027</p>' +
       '</div>' +
-      '<div class="scroll-rod scroll-rod--bot" aria-hidden="true"></div>' +
     '</div>' +
+    '<div class="scroll-rod scroll-rod--bot" aria-hidden="true"></div>' +
     '<div class="scroll-cord" aria-hidden="true">' +
       '<svg viewBox="0 0 26 120" preserveAspectRatio="xMidYMin meet">' +
         '<path class="thread" d="M13 0 C19 16 7 30 13 46 C17 58 11 66 13 76"/>' +

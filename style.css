@@ -745,18 +745,9 @@ body.locked { overflow: hidden; }
 
 .intro-scroll .scroll-sheet {
   position: absolute;
-  left: 0;
-  width: 100%;
-  top: calc(var(--scroll-rh) * 0.4);
-  height: calc(var(--scroll-rh) * 1.32);
-  display: flex;
-  flex-direction: column;
+  inset: 0;
   overflow: hidden;
-  transition: height var(--scroll-unroll);
-  will-change: height;
-}
-.intro-scroll.open .scroll-sheet {
-  height: calc(100% - var(--scroll-rh) * 0.4);
+  z-index: 1;
 }
 .intro-scroll.open .scroll-sheet-inner {
   visibility: visible;
@@ -764,10 +755,12 @@ body.locked { overflow: hidden; }
 }
 
 .scroll-sheet-inner {
-  position: relative;
-  flex: 1 1 auto;
-  width: 100%;
-  min-height: calc(var(--scroll-h) - var(--scroll-rh) * 1.75);
+  position: absolute;
+  inset: 0;
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform var(--scroll-unroll);
+  will-change: transform;
   background: #efe0bd url("scroll-page.jpg") center / cover no-repeat;
   display: flex;
   flex-direction: column;
@@ -814,6 +807,7 @@ body.locked { overflow: hidden; }
   text-indent: .14em;
   color: #5a3a16;
 }
+.intro-scroll.open .scroll-sheet-inner { transform: scaleY(1); }
 
 .scroll-rod {
   position: absolute;
@@ -826,11 +820,13 @@ body.locked { overflow: hidden; }
 }
 .scroll-rod--top { top: calc(var(--scroll-rh) * -0.55); z-index: 4; }
 .scroll-rod--bot {
-  position: relative;
-  flex-shrink: 0;
-  top: auto;
-  margin: calc(var(--scroll-rh) * -0.2) auto 0;
+  top: calc(var(--scroll-rh) * 0.52);
   z-index: 3;
+  transition: transform var(--scroll-unroll);
+  will-change: transform;
+}
+.intro-scroll.open .scroll-rod--bot {
+  transform: translate3d(0, calc(var(--scroll-h) - var(--scroll-rh) * 1.07), 0);
 }
 .scroll-rod--bot::after {
   content: "";
@@ -942,8 +938,9 @@ body.locked { overflow: hidden; }
   .draw { stroke-dashoffset: 0; }
   .lanterns, .petals, .fireworks, .embers { display: none; }
   .intro-scroll.open { transform: translateY(0); transition: none; }
-  .intro-scroll.open .scroll-sheet {
-    height: calc(100% - var(--scroll-rh) * 0.4);
+  .intro-scroll.open .scroll-sheet-inner { transform: scaleY(1); transition: none; }
+  .intro-scroll.open .scroll-rod--bot {
+    transform: translate3d(0, calc(var(--scroll-h) - var(--scroll-rh) * 1.07), 0);
     transition: none;
   }
   .intro-scroll.open .scroll-rod--bot::after { transform: scaleY(0); opacity: 0; }
