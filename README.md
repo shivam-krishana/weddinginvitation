@@ -9,21 +9,18 @@ dependencies. Open `index.html` in a browser to preview.
 | --- | --- |
 | `index.html` | All visible text: cover, invitation wording, the five events, RSVP, footer |
 | `style.css` | Ivory-and-gold theme, layout, the opening-seal animation, scroll reveals |
-| `script.js` | `EVENTS` data, map links, `.ics` downloads, countdown, personalised greeting |
+| `script.js` | Map links, countdown, personalised greeting, opening seal |
 
 Every placeholder is marked `TODO` in both files.
 
 ## Editing content
 
-Event details live in **two** places and must be kept in sync:
+Event details are all in `index.html`, inside each `<article class="event">` — date, time, venue,
+and the `data-map` address used to build its Google Maps link.
 
-- `index.html` — the `<article class="event">` block a guest reads (date, time, venue, `data-map`)
-- `script.js` — the matching `EVENTS` entry used for the `.ics` calendar file and the countdown
-
-The `data-key` on the article, the `data-cal` on its button, and the `EVENTS` key must all match.
-All `start` times are India Standard Time; `mins` is the duration.
-
-`MAIN_EVENT` in `script.js` picks which event the cover countdown points at.
+The one value `script.js` holds is `WEDDING_START`, the date and time the cover countdown runs
+down to. It is written with an explicit `+05:30` offset so the countdown ends at the same real
+moment for guests in any timezone.
 
 ## Personalised links
 

@@ -1,25 +1,6 @@
-// All times are India Standard Time (UTC+05:30)
-// Keys must match the data-key / data-cal attributes in index.html.
-// `where` should match the data-map address on the matching <article> in index.html.
-const EVENTS = {
-  "mehndi": { title: "Mehndi - Shivali & Aastik", start: "2026-01-01T00:00", mins: 180,
-    where: "TODO: full searchable address" },
-  "haldi": { title: "Haldi - Shivali & Aastik", start: "2026-01-01T00:00", mins: 180,
-    where: "TODO: full searchable address" },
-  "sangeet": { title: "Sangeet - Shivali & Aastik", start: "2026-01-01T00:00", mins: 180,
-    where: "TODO: full searchable address" },
-  // TODO: confirm the start time; only the date is final
-  "baraat": { title: "Wedding - Shivali & Aastik", start: "2027-01-23T19:00", mins: 240,
-    where: "TODO: full searchable address" },
-  "reception": { title: "Reception (Dinner) - Shivali & Aastik", start: "2026-01-01T00:00", mins: 180,
-    where: "TODO: full searchable address" },
-};
-
-// The event the cover countdown points at
-const MAIN_EVENT = "baraat";
-
-const IST = "+05:30";
-const toUTCStamp = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+// What the cover countdown runs down to, in India Standard Time (UTC+05:30).
+// TODO: confirm the start time; only the date is final.
+const WEDDING_START = "2027-01-23T19:00+05:30";
 
 // Map links
 document.querySelectorAll("[data-map]").forEach((a) => {
@@ -32,31 +13,6 @@ document.querySelectorAll("[data-wa]").forEach((a) => {
   a.href = `https://wa.me/${a.dataset.wa}?text=${encodeURIComponent(msg)}`;
   a.target = "_blank";
   a.rel = "noopener";
-});
-
-// Add to calendar (.ics download)
-document.querySelectorAll("[data-cal]").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const e = EVENTS[btn.dataset.cal];
-    const start = new Date(e.start + IST);
-    const end = new Date(start.getTime() + e.mins * 60000);
-    const ics = [
-      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Wedding Invitation//EN",
-      "BEGIN:VEVENT",
-      `UID:${btn.dataset.cal}@shivali-aastik-wedding`,
-      `DTSTAMP:${toUTCStamp(new Date())}`,
-      `DTSTART:${toUTCStamp(start)}`,
-      `DTEND:${toUTCStamp(end)}`,
-      `SUMMARY:${e.title}`,
-      `LOCATION:${e.where.replace(/,/g, "\\,")}`,
-      "END:VEVENT", "END:VCALENDAR",
-    ].join("\r\n");
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
-    a.download = `${btn.dataset.cal}.ics`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
 });
 
 // Personalised greeting from the link: ?to=Amarjeet Singh&city=Delhi&sub=W/F
@@ -72,7 +28,7 @@ const sub = !rawSub || rawSub.toUpperCase() === "W/F" ? "With Family" : rawSub;
 if (to) document.title = `${to} · Shivali weds Aastik`;
 
 // Countdown to the wedding day
-const target = new Date(EVENTS[MAIN_EVENT].start + IST).getTime();
+const target = new Date(WEDDING_START).getTime();
 const box = document.getElementById("countdown");
 const countdownLabel = document.querySelector(".countdown-label");
 function tick() {
