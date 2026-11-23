@@ -8,7 +8,8 @@ const EVENTS = {
     where: "TODO: full searchable address" },
   "sangeet": { title: "Sangeet - Shivali & Aastik", start: "2026-01-01T00:00", mins: 180,
     where: "TODO: full searchable address" },
-  "baraat": { title: "Wedding - Shivali & Aastik", start: "2026-01-01T00:00", mins: 240,
+  // TODO: confirm the start time; only the date is final
+  "baraat": { title: "Wedding - Shivali & Aastik", start: "2027-01-23T19:00", mins: 240,
     where: "TODO: full searchable address" },
   "reception": { title: "Reception (Dinner) - Shivali & Aastik", start: "2026-01-01T00:00", mins: 180,
     where: "TODO: full searchable address" },

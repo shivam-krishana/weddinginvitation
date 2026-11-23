@@ -91,8 +91,6 @@ body {
 .names small::after { transform: scaleX(-1); }
 
 .date { font-size: 1.5rem; font-weight: 600; letter-spacing: .05em; }
-.place { color: var(--muted); letter-spacing: .3em; text-transform: uppercase; font-size: .95rem; }
-
 .countdown { display: flex; gap: .7rem; margin-top: 1rem; flex-wrap: wrap; justify-content: center; }
 .countdown div {
   min-width: 70px; padding: .55rem .3rem;
