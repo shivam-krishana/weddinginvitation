@@ -8,8 +8,11 @@ dependencies. Open `index.html` in a browser to preview.
 | File | What it holds |
 | --- | --- |
 | `index.html` | All visible text: cover, invitation wording, the events, RSVP, footer |
-| `style.css` | Ivory-and-gold theme, layout, the opening-seal animation, scroll reveals |
-| `script.js` | Map links, countdown, opening seal |
+| `style.css` | Blush-and-gold theme, layout, the envelope animation, scroll motion |
+| `script.js` | Map links, countdown, envelope intro, petals, scroll-linked effects |
+| `mandala.svg` | The circular motif that turns behind the cover and the intro |
+| `pattern-bg.svg` | Repeating tile used as a faint texture on the page and cards |
+| `favicon.svg`, `apple-touch-icon.svg` | The "S&A" monogram icons |
 
 ## Editing content
 
@@ -20,10 +23,21 @@ The one value `script.js` holds is `WEDDING_START`, the date and time the cover 
 down to. It is written with an explicit `+05:30` offset so the countdown ends at the same real
 moment for guests in any timezone.
 
-## Opening seal
+## Opening envelope
 
-Append `?intro=0` to skip the tap-to-open screen. Otherwise the seal is shown once per browser
-session.
+Append `?intro=0` to skip the tap-to-open screen. Otherwise the envelope is shown once per
+browser session.
+
+## Motion
+
+Scroll-linked effects live in one rAF-throttled handler at the bottom of `script.js`:
+
+- the gold reading-progress bar across the top of the window,
+- the cover drifting up and dissolving as the first section takes over,
+- the gold line down the timeline filling as you pass each celebration.
+
+Everything else is CSS: the drifting petals, the turning mandala, the drawn-on flourish, the
+frosted sticky "Celebrations" heading, the alternating card reveals and the footer diya's flame.
 
 ## Notes
 

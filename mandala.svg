@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <g fill="none" stroke="#a8801f" stroke-width="1.1">
+    <circle cx="200" cy="200" r="22"/>
+    <circle cx="200" cy="200" r="38"/>
+
+    <!-- inner ring of eight petals -->
+    <g>
+      <ellipse cx="200" cy="134" rx="19" ry="28"/>
+      <ellipse cx="200" cy="134" rx="19" ry="28" transform="rotate(45 200 200)"/>
+      <ellipse cx="200" cy="134" rx="19" ry="28" transform="rotate(90 200 200)"/>
+      <ellipse cx="200" cy="134" rx="19" ry="28" transform="rotate(135 200 200)"/>
+      <ellipse cx="200" cy="134" rx="19" ry="28" transform="rotate(180 200 200)"/>
+      <ellipse cx="200" cy="134" rx="19" ry="28" transform="rotate(225 200 200)"/>
+      <ellipse cx="200" cy="134" rx="19" ry="28" transform="rotate(270 200 200)"/>
+      <ellipse cx="200" cy="134" rx="19" ry="28" transform="rotate(315 200 200)"/>
+    </g>
+
+    <circle cx="200" cy="200" r="96"/>
+    <circle cx="200" cy="200" r="100"/>
+
+    <!-- outer ring of sixteen petals -->
+    <g stroke-width="0.9">
+      <ellipse cx="200" cy="74" rx="11" ry="26"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(22.5 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(45 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(67.5 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(90 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(112.5 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(135 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(157.5 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(180 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(202.5 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(225 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(247.5 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(270 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(292.5 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(315 200 200)"/>
+      <ellipse cx="200" cy="74" rx="11" ry="26" transform="rotate(337.5 200 200)"/>
+    </g>
+
+    <circle cx="200" cy="200" r="154"/>
+    <circle cx="200" cy="200" r="158"/>
+    <circle cx="200" cy="200" r="190" stroke-dasharray="2 9" stroke-linecap="round"/>
+  </g>
+
+  <g fill="#a8801f">
+    <circle cx="200" cy="200" r="5"/>
+    <circle cx="200" cy="44" r="3"/>
+    <circle cx="200" cy="356" r="3"/>
+    <circle cx="44" cy="200" r="3"/>
+    <circle cx="356" cy="200" r="3"/>
+    <circle cx="90" cy="90" r="2.2"/>
+    <circle cx="310" cy="90" r="2.2"/>
+    <circle cx="90" cy="310" r="2.2"/>
+    <circle cx="310" cy="310" r="2.2"/>
+  </g>
+</svg>
