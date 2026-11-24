@@ -21,6 +21,21 @@ dependencies. Open `index.html` in a browser to preview.
 | `lantern.png` | The sky lantern, cloned and animated upward on the night bands |
 | `mandala.svg`, `pattern-bg.svg`, `floral-corner.jpg` | Earlier artwork, no longer referenced |
 | `og.jpg` | Link-preview image (built by `tools/make-og.py` — `card.jpg` + envelope letter copy) |
+| `print/` | **Print pack** — run `python3 tools/make-print.py` for 400 DPI front/back JPEGs, 2-page PDF, envelope art |
+
+### Print pack (`print/`)
+
+```bash
+python3 tools/make-print.py   # needs Pillow, img2pdf
+```
+
+| File | Purpose |
+|------|---------|
+| `invite-front.jpg` | Front cover (5×7″ @ 400 DPI, 2000×2800 px) |
+| `invite-back.jpg` | Back — invitation wording + all events + RSVP |
+| `invite-Shivali-Aastik-2page.pdf` | Same two pages, print-ready PDF |
+| `envelope-front.jpg` | Envelope front artwork |
+| `envelope-fold-sheet.jpg` | Cut-and-fold envelope template for a 5×7″ card |
 | `favicon.svg`, `apple-touch-icon.svg` | The "S&A" monogram icons |
 | `tools/prepare-art.py` | Turns the source paintings into the web-sized assets above |
 
